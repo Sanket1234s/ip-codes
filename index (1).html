@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IP Practical Exam - Code Bank</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1b1f24;--mut:#5b6572;--ac:#2563eb;--bd:#d8dde4;--code:#f0f3f7;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171c;--card:#1d2128;--tx:#e8ebef;--mut:#9aa4b2;--ac:#6ea0ff;--bd:#323944;--code:#12151a}}
+:root[data-theme="dark"]{--bg:#14171c;--card:#1d2128;--tx:#e8ebef;--mut:#9aa4b2;--ac:#6ea0ff;--bd:#323944;--code:#12151a}
+html{scroll-padding-top:60px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,Arial,sans-serif}
+header{padding:18px 16px 8px;max-width:900px;margin:auto}
+h1{margin:0;font-size:1.4rem}
+header p{margin:4px 0 0;color:var(--mut)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:8px 16px;max-width:900px;margin:auto;display:flex;flex-wrap:wrap;gap:6px;z-index:5}
+nav a{padding:4px 10px;border:1px solid var(--bd);border-radius:14px;color:var(--ac);text-decoration:none;font-size:.9rem;background:var(--card)}
+main{max-width:900px;margin:auto;padding:0 16px 40px}
+section{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;margin:14px 0}
+h2{margin:0 0 4px;font-size:1.1rem}
+.q,.o{margin:4px 0;font-size:.92rem}
+.lbl{font-weight:700;color:var(--ac);margin:14px 0 4px;font-size:.9rem;text-transform:uppercase;letter-spacing:.03em}
+.qt{margin:4px 0}
+.steps{margin:4px 0;padding-left:22px;font-size:.93rem}
+.steps li{margin:3px 0}
+.file{margin:10px 0}
+.fh{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+button{background:var(--ac);color:#fff;border:0;border-radius:6px;padding:5px 12px;font-size:.85rem;cursor:pointer}
+button.alt{background:#16a34a}
+textarea{width:100%;box-sizing:border-box;background:var(--code);color:var(--tx);border:1px solid var(--bd);border-radius:6px;padding:8px;font:13px/1.45 Consolas,monospace;resize:vertical;white-space:pre;overflow:auto}
+iframe{width:100%;height:380px;border:1px solid var(--bd);border-radius:6px;background:#fff;margin-top:8px}
+.tools{margin-top:6px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Internet Programming - Practical Code Bank</h1>
+  <p>13 experiments, each with the question, complete code, output and how to run it. Tap Copy on any file, or click inside a box and use Ctrl+A, Ctrl+C. “Run” previews the browser-only ones.</p>
+</header>
+<nav id="nav"></nav>
+<main>
+
+<section id="e1" data-run="1">
+<h2>1. Resume (semantic HTML5)</h2>
+<div class="lbl">Question</div>
+<p class="qt">Design a structured resume webpage using HTML5 semantic elements. Organise the content into sections such as personal profile, education, skills, projects and contact information. Use semantic tags such as &lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;section&gt;, &lt;article&gt; and &lt;footer&gt;, along with suitable headings, paragraphs, lists, images and tables. CSS styling is optional.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans">
+<textarea data-f="resume.html"><!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Resume</title></head>
+<body>
+<header>
+  <h1>Rahul Sharma</h1>
+  <p>Third Year Computer Engineering Student</p>
+  <img src="photo.jpg" alt="Profile photo" width="100">
+</header>
+<nav>
+  <a href="#profile">Profile</a> |
+  <a href="#education">Education</a> |
+  <a href="#skills">Skills</a> |
+  <a href="#projects">Projects</a> |
+  <a href="#contact">Contact</a>
+</nav>
+<main>
+  <section id="profile">
+    <h2>Personal Profile</h2>
+    <p>Motivated engineering student interested in web development.</p>
+  </section>
+  <section id="education">
+    <h2>Education</h2>
+    <table border="1" cellpadding="6">
+      <tr><th>Degree</th><th>Institute</th><th>Year</th><th>Score</th></tr>
+      <tr><td>B.E. Computer</td><td>SFIT</td><td>2027</td><td>8.5 CGPA</td></tr>
+      <tr><td>HSC</td><td>ABC College</td><td>2023</td><td>85%</td></tr>
+    </table>
+  </section>
+  <section id="skills">
+    <h2>Skills</h2>
+    <ul><li>HTML, CSS, JavaScript</li><li>Java, PHP</li><li>MySQL</li></ul>
+  </section>
+  <section id="projects">
+    <h2>Projects</h2>
+    <article><h3>Expense Tracker</h3><p>Web app to record daily expenses.</p></article>
+    <article><h3>Library System</h3><p>Java and MySQL book manager.</p></article>
+  </section>
+</main>
+<footer id="contact">
+  <p>Email: rahul@example.com | Phone: 9876543210</p>
+  <p>&amp;copy; 2026 Rahul Sharma</p>
+</footer>
+</body>
+</html></textarea>
+</div>
+<div class="lbl">Output</div>
+<p class="o">Name and photo on top, nav links, education table, skills list, two project articles, contact footer.</p>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Open <b>VS Code</b> (or Notepad). Create a new folder, for example <b>IP</b>.</li><li>Create a new file named <b>resume.html</b>, paste the code from above and save (Ctrl+S).</li><li>Right-click the file and choose <b>Open with → Google Chrome</b>, or double-click it.</li><li>Test it in the browser and compare with the output described above.</li><li>Optional: put any picture named <b>photo.jpg</b> in the same folder so the image shows.</li></ol>
+</section>
+
+<section id="e2" data-run="1">
+<h2>2. Weekly Timetable</h2>
+<div class="lbl">Question</div>
+<p class="qt">Design an HTML webpage to display a student’s weekly class timetable. Show the days of the week, lecture timings, subject names and classroom numbers in a tabular format. Include a suitable heading and use &lt;table&gt;, &lt;tr&gt;, &lt;th&gt; and &lt;td&gt;. Use simple and meaningful sample data. CSS styling is optional.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans">
+<textarea data-f="timetable.html"><!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Timetable</title></head>
+<body>
+<h1 align="center">Weekly Class Timetable</h1>
+<table border="1" cellpadding="8" align="center">
+  <tr><th>Day</th><th>9-10</th><th>10-11</th><th>11-12</th><th>12-1</th></tr>
+  <tr><td>Monday</td><td>IP<br>Room 301</td><td>DBMS<br>Room 302</td><td>OS<br>Room 301</td><td>CN<br>Room 303</td></tr>
+  <tr><td>Tuesday</td><td>DBMS<br>Room 302</td><td>IP<br>Room 301</td><td>CN<br>Room 303</td><td>OS<br>Room 301</td></tr>
+  <tr><td>Wednesday</td><td>OS<br>Room 301</td><td>CN<br>Room 303</td><td>IP Lab<br>Lab 2</td><td>IP Lab<br>Lab 2</td></tr>
+  <tr><td>Thursday</td><td>CN<br>Room 303</td><td>OS<br>Room 301</td><td>DBMS<br>Room 302</td><td>IP<br>Room 301</td></tr>
+  <tr><td>Friday</td><td>IP<br>Room 301</td><td>DBMS Lab<br>Lab 1</td><td>DBMS Lab<br>Lab 1</td><td>Library</td></tr>
+</table>
+</body>
+</html></textarea>
+</div>
+<div class="lbl">Output</div>
+<p class="o">Bordered table, Monday to Friday, each cell shows subject and room.</p>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Open <b>VS Code</b> (or Notepad). Create a new folder, for example <b>IP</b>.</li><li>Create a new file named <b>timetable.html</b>, paste the code from above and save (Ctrl+S).</li><li>Right-click the file and choose <b>Open with → Google Chrome</b>, or double-click it.</li><li>Test it in the browser and compare with the output described above.</li></ol>
+</section>
+
+<section id="e3" data-run="1">
+<h2>3. Feedback Form with Audio and Video</h2>
+<div class="lbl">Question</div>
+<p class="qt">Design a webpage using HTML5 form controls and multimedia elements: a student feedback form with text fields for name and email, a department dropdown, and a rating or feedback field. Use validation attributes such as required, type=“email” and placeholder. Also embed an audio clip and a video using &lt;audio&gt; and &lt;video&gt;. The page should have a clear layout and user-friendly form. CSS styling is optional.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans">
+<textarea data-f="feedback.html"><!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Feedback</title></head>
+<body>
+<h1>Student Feedback Form</h1>
+<form>
+  <p>Name: <input type="text" placeholder="Enter name" required></p>
+  <p>Email: <input type="email" placeholder="you@example.com" required></p>
+  <p>Department:
+    <select required>
+      <option value="">--Select--</option>
+      <option>Computer</option><option>IT</option><option>EXTC</option>
+    </select></p>
+  <p>Rating (1-5): <input type="number" min="1" max="5" required></p>
+  <p>Feedback:<br>&lt;textarea rows="4" cols="40" placeholder="Write here" required&gt;&lt;/textarea&gt;</p>
+  <p><button type="submit">Submit</button></p>
+</form>
+
+<h2>Audio</h2>
+<audio controls><source src="clip.mp3" type="audio/mpeg"></audio>
+
+<h2>Video</h2>
+<video width="320" controls><source src="clip.mp4" type="video/mp4"></video>
+</body>
+</html></textarea>
+</div>
+<div class="lbl">Output</div>
+<p class="o">Form with validation messages, then audio and video players (add clip.mp3 and clip.mp4 next to the file).</p>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Open <b>VS Code</b> (or Notepad). Create a new folder, for example <b>IP</b>.</li><li>Create a new file named <b>feedback.html</b>, paste the code from above and save (Ctrl+S).</li><li>Right-click the file and choose <b>Open with → Google Chrome</b>, or double-click it.</li><li>Test it in the browser and compare with the output described above.</li><li>Put any small <b>clip.mp3</b> and <b>clip.mp4</b> in the same folder so the audio and video play. Click Submit with empty fields to see the validation messages.</li></ol>
+</section>
+
+<section id="e4" data-run="1">
+<h2>4. CSS3 Event Page (inline + internal + external)</h2>
+<div class="lbl">Question</div>
+<p class="qt">Design a simple webpage for a college event or student activity using CSS3. Apply inline, internal and external CSS. Use background colors, borders, text formatting and shadow effects. Apply at least one CSS3 transformation and transition. Use HTML5 and CSS3 and demonstrate all three types of stylesheets.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans">
+<textarea data-f="event.html"><!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tech Fest 2026</title>
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Internal CSS -->
+  <style>
+    .info {
+      background-color: rgb(255, 243, 205);
+      border: 2px dashed rgb(255, 165, 0);
+      padding: 15px;
+      width: 60%;
+      margin: 20px auto;
+    }
+    .card {
+      display: inline-block;
+      width: 150px;
+      padding: 20px;
+      margin: 10px;
+      background-color: rgb(227, 242, 253);
+      border: 2px solid rgb(25, 118, 210);
+      box-shadow: 5px 5px 10px rgb(128, 128, 128);
+      transition: transform 0.5s;
+    }
+    .card:hover { transform: rotate(8deg) scale(1.2); }
+  </style>
+</head>
+<body>
+  <!-- Inline CSS -->
+  <h1 style="color: rgb(255,255,255); background-color: rgb(0,0,139); text-align: center; padding: 15px; text-shadow: 2px 2px 4px rgb(0,0,0);">TECH FEST 2026</h1>
+
+  <div class="info">
+    <p><b>Date:</b> 15 March 2026 &amp;nbsp; <b>Venue:</b> College Auditorium</p>
+  </div>
+
+  <div class="center">
+    <div class="card">Coding Contest</div>
+    <div class="card">Robo Race</div>
+    <div class="card">Quiz</div>
+  </div>
+</body>
+</html></textarea>
+<textarea data-f="style.css">body {
+  background-color: rgb(240, 248, 255);
+  font-family: Arial, sans-serif;
+}
+.center { text-align: center; }</textarea>
+</div>
+<div class="lbl">Output</div>
+<p class="o">Dark blue banner, yellow dashed info box, three cards that rotate and grow on hover.</p>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>In VS Code create a folder with two files: <b>event.html</b> and <b>style.css</b>.</li><li>Paste the HTML code into event.html and the CSS code into style.css. Both files must be in the same folder.</li><li>Save both, then open <b>event.html</b> in Chrome.</li><li>Hover over the cards to see the transform and transition.</li></ol>
+</section>
+
+<section id="e5">
+<h2>5. Bootstrap Responsive Page</h2>
+<div class="lbl">Question</div>
+<p class="qt">Design a simple responsive webpage for a student profile or department information using Bootstrap. Arrange the content with Bootstrap’s grid system and responsive components. Include suitable colors, backgrounds and text formatting. Use CSS3 media queries or Bootstrap responsive classes so the page adjusts to different screen sizes. Add a simple animation or transition effect. Use HTML5, CSS3 and Bootstrap.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans">
+<textarea data-f="profile.html"><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Department Info</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .box { transition: transform 0.4s; }
+    .box:hover { transform: translateY(-10px); }
+    @media (max-width: 576px) { h1 { font-size: 1.5rem; } }
+  </style>
+</head>
+<body class="bg-light">
+  <nav class="navbar navbar-dark bg-primary">
+    <div class="container"><span class="navbar-brand">Computer Engineering Department</span></div>
+  </nav>
+  <div class="container my-4">
+    <h1 class="text-center text-primary">Welcome to Our Department</h1>
+    <div class="row text-center mt-4">
+      <div class="col-12 col-md-4 mb-3"><div class="card box bg-success text-white p-3"><h4>Faculty</h4><p>25 teachers</p></div></div>
+      <div class="col-12 col-md-4 mb-3"><div class="card box bg-warning p-3"><h4>Students</h4><p>400+ students</p></div></div>
+      <div class="col-12 col-md-4 mb-3"><div class="card box bg-danger text-white p-3"><h4>Labs</h4><p>6 labs</p></div></div>
+    </div>
+  </div>
+</body>
+</html></textarea>
+</div>
+<div class="lbl">Output</div>
+<p class="o">Blue navbar, three coloured cards in a row on desktop and stacked on mobile, cards lift on hover.</p>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Create <b>profile.html</b> in VS Code, paste the code and save.</li><li>Make sure internet is on (the Bootstrap link loads from the web).</li><li>Open it in Chrome. Press <b>F12</b> and click the mobile (device toolbar) icon to see how it looks on a small screen.</li></ol>
+</section>
+
+<section id="e6" data-run="1">
+<h2>6. Student Result Calculator</h2>
+<div class="lbl">Question</div>
+<p class="qt">Design and develop a Student Result Calculator using HTML, CSS and JavaScript. Create a form to accept the student’s name, roll number, branch, semester and marks in three subjects. Store the details in a JavaScript object. Add a button to calculate total marks, percentage and result (Pass/Fail). Display the details and the calculated result on the webpage.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans">
+<textarea data-f="result.html"><!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"><title>Result Calculator</title>
+<style>
+  body { font-family: Arial; }
+  .box { width: 320px; margin: 20px auto; padding: 20px; border: 1px solid gray; }
+  input, select { width: 100%; margin: 4px 0 8px; padding: 5px; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>Result Calculator</h2>
+  Name: <input type="text" id="name">
+  Roll No: <input type="text" id="roll">
+  Branch: <select id="branch"><option>Computer</option><option>IT</option><option>EXTC</option></select>
+  Semester: <input type="number" id="sem">
+  Marks 1: <input type="number" id="m1">
+  Marks 2: <input type="number" id="m2">
+  Marks 3: <input type="number" id="m3">
+  <button onclick="calculate()">Calculate</button>
+  <div id="output"></div>
+</div>
+<script>
+function calculate() {
+  var student = {
+    name: document.getElementById("name").value,
+    roll: document.getElementById("roll").value,
+    branch: document.getElementById("branch").value,
+    semester: document.getElementById("sem").value,
+    m1: Number(document.getElementById("m1").value),
+    m2: Number(document.getElementById("m2").value),
+    m3: Number(document.getElementById("m3").value)
+  };
+  student.total = student.m1 + student.m2 + student.m3;
+  student.percentage = student.total / 300 * 100;
+  if (student.m1 >= 40 &amp;&amp; student.m2 >= 40 &amp;&amp; student.m3 >= 40)
+    student.result = "Pass";
+  else
+    student.result = "Fail";
+
+  document.getElementById("output").innerHTML =
+    "Name: " + student.name + "<br>Roll No: " + student.roll +
+    "<br>Branch: " + student.branch + "<br>Semester: " + student.semester +
+    "<br>Total: " + student.total + "/300" +
+    "<br>Percentage: " + student.percentage.toFixed(2) + "%" +
+    "<br>Result: <b>" + student.result + "</b>";
+}
+</script>
+</body>
+</html></textarea>
+</div>
+<div class="lbl">Output</div>
+<p class="o">Marks 78, 82, 69 give Total 229/300, 76.33%, Pass. Any subject below 40 gives Fail.</p>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Open <b>VS Code</b> (or Notepad). Create a new folder, for example <b>IP</b>.</li><li>Create a new file named <b>result.html</b>, paste the code from above and save (Ctrl+S).</li><li>Right-click the file and choose <b>Open with → Google Chrome</b>, or double-click it.</li><li>Test it in the browser and compare with the output described above.</li><li>Enter marks 78, 82 and 69 and click Calculate.</li></ol>
+</section>
+
+<section id="e7" data-run="1">
+<h2>7. Event Registration Form</h2>
+<div class="lbl">Question</div>
+<p class="qt">Design and develop an interactive Event Registration Form using HTML, CSS and JavaScript. Collect name, email, contact number, event selection and preferred session. Validate the inputs and display error messages for invalid entries. Dynamically display additional fields based on the selected event. Use JavaScript exception handling for unexpected or invalid inputs and display a success message after successful registration.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans">
+<textarea data-f="event_registration.html"><!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Event Registration</title>
+  <style>
+    body { font-family: Arial; background-color: rgb(244, 244, 244); }
+    .box { width: 350px; margin: 30px auto; padding: 20px; background-color: white; }
+    input, select { width: 100%; margin: 5px 0 10px; padding: 5px; }
+    #error { color: red; }
+    #success { color: green; font-weight: bold; }
+  </style>
+</head>
+<body>
+<div class="box">
+  <h2>Event Registration</h2>
+
+  Name: <input type="text" id="name">
+  Email: <input type="text" id="email">
+  Contact: <input type="text" id="phone">
+
+  Event:
+  <select id="event" onchange="showExtra()">
+    <option value="">--Select--</option>
+    <option value="Hackathon">Hackathon</option>
+    <option value="Paper Presentation">Paper Presentation</option>
+    <option value="Quiz">Quiz</option>
+  </select>
+
+  <div id="extra"></div>
+
+  Session:
+  <select id="session">
+    <option>Morning</option>
+    <option>Afternoon</option>
+  </select>
+
+  <button onclick="register()">Register</button>
+  <p id="error"></p>
+  <p id="success"></p>
+</div>
+
+<script>
+function showExtra() {
+  var event = document.getElementById("event").value;
+  var html = "";
+  if (event == "Hackathon") html = 'Team Size: <input type="number" id="extraVal">';
+  if (event == "Paper Presentation") html = 'Paper Title: <input type="text" id="extraVal">';
+  if (event == "Quiz") html = 'College Name: <input type="text" id="extraVal">';
+  document.getElementById("extra").innerHTML = html;
+}
+
+function register() {
+  document.getElementById("error").innerText = "";
+  document.getElementById("success").innerText = "";
+
+  try {
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var phone = document.getElementById("phone").value;
+    var event = document.getElementById("event").value;
+    var session = document.getElementById("session").value;
+
+    if (name == "") throw new Error("Name is required");
+    if (!email.includes("@")) throw new Error("Enter a valid email");
+    if (phone.length != 10 || isNaN(phone)) throw new Error("Contact must be 10 digits");
+    if (event == "") throw new Error("Please select an event");
+
+    var extra = document.getElementById("extraVal");
+    if (extra.value == "") throw new Error("Please fill the extra field");
+
+    document.getElementById("success").innerText =
+      "Thank you " + name + "! Registered for " + event + " (" + session + ").";
+  } catch (e) {
+    document.getElementById("error").innerText = e.message;
+  }
+}
+</script>
+</body>
+</html></textarea>
+</div>
+<div class="lbl">Output</div>
+<p class="o">Red message for the first invalid entry. Hackathon shows Team Size, Paper Presentation shows Paper Title, Quiz shows College Name. Valid input shows a green thank-you message.</p>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Open <b>VS Code</b> (or Notepad). Create a new folder, for example <b>IP</b>.</li><li>Create a new file named <b>event_registration.html</b>, paste the code from above and save (Ctrl+S).</li><li>Right-click the file and choose <b>Open with → Google Chrome</b>, or double-click it.</li><li>Test it in the browser and compare with the output described above.</li><li>Leave fields empty or wrong to see errors, then fill everything correctly to see the success message.</li></ol>
+</section>
+
+<section id="e8" data-run="1">
+<h2>8. Appointment Booking Form</h2>
+<div class="lbl">Question</div>
+<p class="qt">Design and develop an interactive Appointment Booking Form using HTML, CSS and JavaScript. Accept name, email, contact number, appointment type, preferred date and time slot. Implement client-side validation with error messages. Dynamically update the available time slots based on the selected appointment type. Use a custom JavaScript exception and a try-catch block to handle invalid inputs or unexpected conditions. Display a dynamic confirmation message after successful submission.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans">
+<textarea data-f="appointment.html"><!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Appointment Booking</title>
+<style>
+  body { font-family: Arial; }
+  .box { width: 350px; margin: 30px auto; padding: 20px; border: 1px solid gray; }
+  input, select { width: 100%; margin: 5px 0 10px; padding: 5px; }
+  #error { color: red; }
+  #msg { color: green; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>Book Appointment</h2>
+  Name: <input type="text" id="name">
+  Email: <input type="text" id="email">
+  Contact: <input type="text" id="phone">
+  Type:
+  <select id="type" onchange="updateSlots()">
+    <option value="">--Select--</option>
+    <option>Doctor</option>
+    <option>Counselling</option>
+    <option>Dental</option>
+  </select>
+  Date: <input type="date" id="date">
+  Time Slot: <select id="slot"></select>
+  <button onclick="book()">Book</button>
+  <p id="error"></p>
+  <p id="msg"></p>
+</div>
+
+<script>
+var slots = {
+  Doctor: ["10:00 AM", "11:00 AM", "12:00 PM"],
+  Counselling: ["2:00 PM", "3:00 PM"],
+  Dental: ["4:00 PM", "5:00 PM"]
+};
+
+// custom exception
+function BookingError(message) {
+  this.message = message;
+}
+
+function updateSlots() {
+  var type = document.getElementById("type").value;
+  var slot = document.getElementById("slot");
+  slot.innerHTML = "";
+  if (type == "") return;
+  for (var i = 0; i &lt; slots[type].length; i++) {
+    slot.innerHTML += "<option>" + slots[type][i] + "</option>";
+  }
+}
+
+function book() {
+  document.getElementById("error").innerText = "";
+  document.getElementById("msg").innerText = "";
+  try {
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var phone = document.getElementById("phone").value;
+    var type = document.getElementById("type").value;
+    var date = document.getElementById("date").value;
+    var slot = document.getElementById("slot").value;
+
+    if (name == "") throw new BookingError("Name is required");
+    if (!email.includes("@")) throw new BookingError("Enter a valid email");
+    if (phone.length != 10 || isNaN(phone)) throw new BookingError("Contact must be 10 digits");
+    if (type == "") throw new BookingError("Select appointment type");
+    if (date == "") throw new BookingError("Select a date");
+    if (new Date(date) &lt; new Date(new Date().toDateString()))
+      throw new BookingError("Date cannot be in the past");
+
+    document.getElementById("msg").innerText =
+      "Confirmed! " + name + ", your " + type + " appointment is on " + date + " at " + slot + ".";
+  } catch (e) {
+    if (e instanceof BookingError)
+      document.getElementById("error").innerText = e.message;
+    else
+      document.getElementById("error").innerText = "Unexpected error";
+  }
+}
+</script>
+</body>
+</html></textarea>
+</div>
+<div class="lbl">Output</div>
+<p class="o">Choosing a type fills the time-slot list. Errors show in red (for example “Date cannot be in the past”). Success shows “Confirmed! Rahul, your Doctor appointment is on 2026-11-10 at 11:00 AM.”</p>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Open <b>VS Code</b> (or Notepad). Create a new folder, for example <b>IP</b>.</li><li>Create a new file named <b>appointment.html</b>, paste the code from above and save (Ctrl+S).</li><li>Right-click the file and choose <b>Open with → Google Chrome</b>, or double-click it.</li><li>Test it in the browser and compare with the output described above.</li><li>Pick an appointment type to see the time slots change, then try an invalid date or contact number.</li></ol>
+</section>
+
+<section id="e9">
+<h2>9. Servlet Login (GET, POST, Cookie, Session, Logout)</h2>
+<div class="lbl">Question</div>
+<p class="qt">Design and develop a web application using Java Servlets and deploy it on Apache Tomcat. Create a login form for username and password. Implement a Servlet to process the login using HTTP POST and display an appropriate response. Demonstrate HTTP GET and POST handling. Use Cookies to store and retrieve user information and HTTP Session to maintain login state across requests. Include a logout option to end the session.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans">
+<textarea data-f="login.html"><!DOCTYPE html>
+<html>
+<body>
+<h2>Login</h2>
+<form action="login" method="post">
+  Username: <input type="text" name="username" required><br><br>
+  Password: <input type="password" name="password" required><br><br>
+  <input type="submit" value="Login">
+</form>
+</body>
+</html></textarea>
+<textarea data-f="LoginServlet.java">import java.io.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.WebServlet;
+
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {
+
+  // GET: show profile if logged in
+  protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    res.setContentType("text/html");
+    PrintWriter out = res.getWriter();
+    HttpSession session = req.getSession(false);
+    if (session != null &amp;&amp; session.getAttribute("user") != null) {
+      out.println("<h2>Welcome back, " + session.getAttribute("user") + "</h2>");
+      Cookie[] cookies = req.getCookies();
+      if (cookies != null)
+        for (Cookie c : cookies)
+          if (c.getName().equals("lastUser"))
+            out.println("<p>Cookie lastUser = " + c.getValue() + "</p>");
+      out.println("<a href='logout'>Logout</a>");
+    } else {
+      out.println("<p>Not logged in. <a href='login.html'>Login</a></p>");
+    }
+  }
+
+  // POST: process login
+  protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    res.setContentType("text/html");
+    PrintWriter out = res.getWriter();
+    String u = req.getParameter("username");
+    String p = req.getParameter("password");
+
+    if (u.equals("admin") &amp;&amp; p.equals("1234")) {
+      res.addCookie(new Cookie("lastUser", u));          // cookie
+      req.getSession().setAttribute("user", u);          // session
+      out.println("<h2>Login Successful. Welcome " + u + "</h2>");
+      out.println("<a href='login'>View Profile</a> | <a href='logout'>Logout</a>");
+    } else {
+      out.println("<h3 style='color:red'>Invalid username or password</h3>");
+      out.println("<a href='login.html'>Try again</a>");
+    }
+  }
+}</textarea>
+<textarea data-f="LogoutServlet.java">import java.io.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.WebServlet;
+
+@WebServlet("/logout")
+public class LogoutServlet extends HttpServlet {
+  protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+    HttpSession session = req.getSession(false);
+    if (session != null) session.invalidate();
+    res.setContentType("text/html");
+    res.getWriter().println("<h3>Logged out.</h3><a href='login.html'>Login again</a>");
+  }
+}</textarea>
+</div>
+<div class="lbl">Output</div>
+<p class="o">Admin / 1234 shows “Login Successful. Welcome admin” (cookie and session created). Wrong login shows a red error. View Profile (GET) shows the session user and cookie. Logout ends the session.</p>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Apache Tomcat 10</b> and <b>Eclipse IDE for Enterprise Java</b>. (With Tomcat 9, change <b>jakarta</b> to <b>javax</b> in both servlets.)</li><li>In Eclipse: <b>File → New → Dynamic Web Project</b>, name it <b>loginapp</b>, choose Tomcat as the target runtime, then Finish.</li><li>Put <b>login.html</b> in <b>src/main/webapp</b>. Right-click <b>src/main/java → New → Class</b> and create <b>LoginServlet</b> and <b>LogoutServlet</b>, pasting the code.</li><li>Right-click the project → <b>Run As → Run on Server</b> → select Tomcat → Finish.</li><li>Open <b>http://localhost:8080/loginapp/login.html</b>. Log in with <b>admin / 1234</b>, click View Profile, then Logout.</li></ol>
+</section>
+
+<section id="e10">
+<h2>10. JSP + JDBC + MySQL (student records)</h2>
+<div class="lbl">Question</div>
+<p class="qt">Design and develop a web application using JSP to manage student information. Create a form for roll number, name, branch, semester and email. Connect to a MySQL database using JDBC and insert student records. Retrieve the stored records and display them dynamically on a JSP page in a table. Use HTML, JSP, JDBC and MySQL, and deploy on Apache Tomcat.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans">
+<textarea data-f="students.sql">CREATE DATABASE college;
+USE college;
+CREATE TABLE student (
+  roll INT PRIMARY KEY,
+  name VARCHAR(50),
+  branch VARCHAR(30),
+  semester INT,
+  email VARCHAR(60)
+);</textarea>
+<textarea data-f="student.html"><!DOCTYPE html>
+<html>
+<body>
+<h2>Student Information</h2>
+<form action="display.jsp" method="post">
+  Roll No: <input type="number" name="roll" required><br><br>
+  Name: <input type="text" name="name" required><br><br>
+  Branch: <input type="text" name="branch" required><br><br>
+  Semester: <input type="number" name="semester" required><br><br>
+  Email: <input type="email" name="email" required><br><br>
+  <input type="submit" value="Save">
+</form>
+</body>
+</html></textarea>
+<textarea data-f="display.jsp"><%@ page import="java.sql.*" %>
+<html>
+<body>
+<h2>Student Records</h2>
+<%
+  try {
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    Connection con = DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/college", "root", "root");
+
+    if (request.getParameter("roll") != null) {
+      PreparedStatement ps = con.prepareStatement("INSERT INTO student VALUES (?,?,?,?,?)");
+      ps.setInt(1, Integer.parseInt(request.getParameter("roll")));
+      ps.setString(2, request.getParameter("name"));
+      ps.setString(3, request.getParameter("branch"));
+      ps.setInt(4, Integer.parseInt(request.getParameter("semester")));
+      ps.setString(5, request.getParameter("email"));
+      ps.executeUpdate();
+      out.println("<p style='color:green'>Record inserted successfully.</p>");
+    }
+
+    Statement st = con.createStatement();
+    ResultSet rs = st.executeQuery("SELECT * FROM student");
+%>
+<table border="1" cellpadding="6">
+  <tr><th>Roll No</th><th>Name</th><th>Branch</th><th>Semester</th><th>Email</th></tr>
+<% while (rs.next()) { %>
+  <tr>
+    <td><%= rs.getInt("roll") %></td>
+    <td><%= rs.getString("name") %></td>
+    <td><%= rs.getString("branch") %></td>
+    <td><%= rs.getInt("semester") %></td>
+    <td><%= rs.getString("email") %></td>
+  </tr>
+<% } con.close(); } catch (Exception e) { out.println("Error: " + e); } %>
+</table>
+<a href="student.html">Add another</a>
+</body>
+</html></textarea>
+</div>
+<div class="lbl">Output</div>
+<p class="o">Submitting the form inserts a row, shows “Record inserted successfully.” and a table of all students.</p>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Start <b>XAMPP</b> (MySQL). Open phpMyAdmin, click the SQL tab and run the SQL code above to create the <b>college</b> database and <b>student</b> table.</li><li>In Eclipse create a <b>Dynamic Web Project</b> named <b>studentapp</b> with Tomcat as runtime.</li><li>Download the <b>mysql-connector-j</b> jar and copy it into <b>src/main/webapp/WEB-INF/lib</b>.</li><li>Put <b>student.html</b> and <b>display.jsp</b> in <b>src/main/webapp</b>. In display.jsp change the MySQL password ("root") to your own (empty in XAMPP).</li><li>Right-click the project → <b>Run As → Run on Server</b>. Open <b>http://localhost:8080/studentapp/student.html</b>, fill the form and submit.</li></ol>
+</section>
+
+<section id="e11">
+<h2>11. AJAX Student Dashboard</h2>
+<div class="lbl">Question</div>
+<p class="qt">Design and develop a Student Information Dashboard using HTML, CSS, JavaScript and AJAX. Create a page with at least two independent asynchronous content containers for student details and examination results. Use AJAX to read data from a JSON or text file and display it in the containers without reloading. Provide separate buttons to update each container independently. PHP or any server-side language is not required.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans">
+<textarea data-f="dashboard.html"><!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Student Dashboard</title>
+<style>
+  body { font-family: Arial; }
+  .container { display: flex; gap: 20px; justify-content: center; }
+  .panel { width: 280px; min-height: 150px; padding: 15px; border: 1px solid gray; }
+</style>
+</head>
+<body>
+<h1 align="center">Student Information Dashboard</h1>
+<div class="container">
+  <div class="panel">
+    <h3>Student Details</h3>
+    <div id="details">Click the button.</div>
+    <button onclick="loadDetails()">Update Details</button>
+  </div>
+  <div class="panel">
+    <h3>Exam Results</h3>
+    <div id="results">Click the button.</div>
+    <button onclick="loadResults()">Update Results</button>
+  </div>
+</div>
+
+<script>
+function loadDetails() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "students.json", true);
+  xhr.onload = function () {
+    var d = JSON.parse(xhr.responseText);
+    document.getElementById("details").innerHTML =
+      "Name: " + d.name + "<br>Roll No: " + d.roll +
+      "<br>Branch: " + d.branch + "<br>Semester: " + d.semester;
+  };
+  xhr.send();
+}
+
+function loadResults() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "results.json", true);
+  xhr.onload = function () {
+    var r = JSON.parse(xhr.responseText);
+    document.getElementById("results").innerHTML =
+      "IP: " + r.ip + "<br>DBMS: " + r.dbms + "<br>OS: " + r.os +
+      "<br><b>Result: " + r.result + "</b>";
+  };
+  xhr.send();
+}
+</script>
+</body>
+</html></textarea>
+<textarea data-f="students.json">{ "name": "Rahul Sharma", "roll": 21, "branch": "Computer", "semester": 5 }</textarea>
+<textarea data-f="results.json">{ "ip": 78, "dbms": 82, "os": 69, "result": "Pass" }</textarea>
+</div>
+<div class="lbl">Output</div>
+<p class="o">Two boxes. Update Details fills the left box, Update Results fills the right box, each without reloading the page.</p>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Create a folder with <b>dashboard.html</b>, <b>students.json</b> and <b>results.json</b> and paste the code.</li><li>In VS Code install the extension <b>Live Server</b> (Extensions icon, search, Install).</li><li>Right-click <b>dashboard.html</b> → <b>Open with Live Server</b>. AJAX will not work by double-clicking the file.</li><li>Click <b>Update Details</b> and <b>Update Results</b> separately.</li></ol>
+</section>
+
+<section id="e12">
+<h2>12. XML + DTD + PHP (parse and display)</h2>
+<div class="lbl">Question</div>
+<p class="qt">Create an XML document to store student details such as roll number, name, branch and semester. Validate the XML using DTD or XSD. Develop a PHP application to parse the XML and display the student records in a table. Use XML, DTD/XSD, PHP and HTML. Database connectivity is not required.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans">
+<textarea data-f="students.dtd"><!ELEMENT students (student+)>
+<!ELEMENT student (roll, name, branch, semester)>
+<!ELEMENT roll (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT branch (#PCDATA)>
+<!ELEMENT semester (#PCDATA)></textarea>
+<textarea data-f="students.xml"><?xml version="1.0"?>
+<!DOCTYPE students SYSTEM "students.dtd">
+<students>
+  <student><roll>1</roll><name>Rahul Sharma</name><branch>Computer</branch><semester>5</semester></student>
+  <student><roll>2</roll><name>Priya Patil</name><branch>IT</branch><semester>5</semester></student>
+  <student><roll>3</roll><name>Amit Shah</name><branch>EXTC</branch><semester>5</semester></student>
+</students></textarea>
+<textarea data-f="parse.php"><?php
+// 1. Validate XML using the DTD
+$dom = new DOMDocument();
+$dom->load("students.xml");
+if ($dom->validate()) echo "<p style='color:green'>XML is valid (DTD)</p>";
+else echo "<p style='color:red'>XML is NOT valid</p>";
+
+// 2. Parse and show in a table
+$xml = simplexml_load_file("students.xml");
+echo "<table border='1' cellpadding='6'>";
+echo "<tr><th>Roll No</th><th>Name</th><th>Branch</th><th>Semester</th></tr>";
+foreach ($xml->student as $s) {
+  echo "<tr><td>$s->roll</td><td>$s->name</td><td>$s->branch</td><td>$s->semester</td></tr>";
+}
+echo "</table>";
+?></textarea>
+</div>
+<div class="lbl">Output</div>
+<p class="o">“XML is valid (DTD)” and a table of students (roll, name, branch, semester).</p>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install and open <b>XAMPP</b>, click <b>Start</b> next to Apache.</li><li>Open <b>C:\xampp\htdocs</b>, create a folder <b>e12</b> and save <b>students.dtd</b>, <b>students.xml</b> and <b>parse.php</b> in it.</li><li>Open Chrome and go to <b>http://localhost/e12/parse.php</b>.</li></ol>
+</section>
+
+<section id="e13">
+<h2>13. XML + PHP + MySQL</h2>
+<div class="lbl">Question</div>
+<p class="qt">Create a well-formed XML document containing student details such as roll number, name, branch and semester. Develop a PHP application to accept the XML data, connect to a MySQL database and store the XML content. Retrieve the stored XML and display it on a webpage. Use XML with DTD/XSD, PHP and MySQL.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans">
+<textarea data-f="xml.sql">CREATE DATABASE xmldb;
+USE xmldb;
+CREATE TABLE xml_data (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  content TEXT
+);</textarea>
+<textarea data-f="store.php"><html>
+<body>
+<h2>Store XML in MySQL</h2>
+<form method="post">
+&lt;textarea name="xmldata" rows="9" cols="70"&gt;<?xml version="1.0"?>
+<!DOCTYPE students [
+  <!ELEMENT students (student+)>
+  <!ELEMENT student (roll, name, branch, semester)>
+  <!ELEMENT roll (#PCDATA)>
+  <!ELEMENT name (#PCDATA)>
+  <!ELEMENT branch (#PCDATA)>
+  <!ELEMENT semester (#PCDATA)>
+]>
+<students>
+  <student><roll>1</roll><name>Rahul Sharma</name><branch>Computer</branch><semester>5</semester></student>
+</students>&lt;/textarea&gt;<br>
+<input type="submit" value="Store XML">
+</form>
+<?php
+$con = mysqli_connect("localhost", "root", "", "xmldb");
+
+if (isset($_POST['xmldata'])) {
+  $dom = new DOMDocument();
+  if ($dom->loadXML($_POST['xmldata']) &amp;&amp; $dom->validate()) {
+    $x = mysqli_real_escape_string($con, $_POST['xmldata']);
+    mysqli_query($con, "INSERT INTO xml_data(content) VALUES ('$x')");
+    echo "<p style='color:green'>XML stored successfully.</p>";
+  } else {
+    echo "<p style='color:red'>Invalid XML.</p>";
+  }
+}
+
+echo "<h3>Stored Records</h3>";
+$res = mysqli_query($con, "SELECT * FROM xml_data");
+while ($row = mysqli_fetch_assoc($res)) {
+  $xml = simplexml_load_string($row['content']);
+  foreach ($xml->student as $s) {
+    echo "ID {$row['id']}: Roll $s->roll, $s->name, $s->branch, Sem $s->semester<br>";
+  }
+}
+?>
+</body>
+</html></textarea>
+</div>
+<div class="lbl">Output</div>
+<p class="o">Click Store XML, then “XML stored successfully.” and the stored records below. Bad XML shows “Invalid XML.”</p>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Open <b>XAMPP</b> and start both <b>Apache</b> and <b>MySQL</b>.</li><li>Open <b>http://localhost/phpmyadmin</b>, click the <b>SQL</b> tab, paste the SQL code above and click Go.</li><li>Create the folder <b>C:\xampp\htdocs\e13</b> and save <b>store.php</b> in it.</li><li>Open <b>http://localhost/e13/store.php</b> and click <b>Store XML</b>. Stored records appear below the form.</li></ol>
+</section>
+
+</main>
+
+<script>
+function copyText(t, btn) {
+  var done = function () { btn.textContent = "Copied!"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); };
+  var fallback = function () {
+    t.focus(); t.select();
+    try { document.execCommand("copy"); done(); } catch (e) { btn.textContent = "Press Ctrl+C"; }
+  };
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t.value).then(done, fallback);
+    else fallback();
+  } catch (e) { fallback(); }
+}
+
+function runPreview(sec, out) {
+  var html = sec.querySelector("textarea").value;
+  var css = sec.querySelectorAll('textarea[data-f$=".css"]');
+  for (var i = 0; i < css.length; i++) {
+    (function (c) {
+      var re = new RegExp('<link[^>]*href="' + c.dataset.f + '"[^>]*>');
+      html = html.replace(re, function () { return "<style>" + c.value + "</style>"; });
+    })(css[i]);
+  }
+  out.innerHTML = "";
+  var f = document.createElement("iframe");
+  f.setAttribute("sandbox", "allow-scripts allow-modals allow-forms");
+  f.srcdoc = html;
+  out.appendChild(f);
+}
+
+var nav = document.getElementById("nav");
+var secs = document.querySelectorAll("section");
+for (var s = 0; s < secs.length; s++) {
+  (function (sec) {
+    var a = document.createElement("a");
+    a.href = "#" + sec.id;
+    a.textContent = "Exp " + sec.id.slice(1);
+    nav.appendChild(a);
+
+    var areas = sec.querySelectorAll("textarea");
+    for (var i = 0; i < areas.length; i++) {
+      (function (t) {
+        var w = document.createElement("div");
+        w.className = "file";
+        var h = document.createElement("div");
+        h.className = "fh";
+        var b = document.createElement("b");
+        b.textContent = t.dataset.f;
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = "Copy";
+        btn.onclick = function () { copyText(t, btn); };
+        h.appendChild(b); h.appendChild(btn);
+        t.parentNode.insertBefore(w, t);
+        w.appendChild(h); w.appendChild(t);
+        t.readOnly = true;
+        t.spellcheck = false;
+        t.setAttribute("wrap", "off");
+        t.rows = Math.min(t.value.split("\n").length + 1, 26);
+      })(areas[i]);
+    }
+
+    if (sec.dataset.run) {
+      var tools = document.createElement("div");
+      tools.className = "tools";
+      var rb = document.createElement("button");
+      rb.type = "button"; rb.className = "alt"; rb.textContent = "Run preview";
+      var out = document.createElement("div");
+      rb.onclick = function () { runPreview(sec, out); };
+      tools.appendChild(rb); tools.appendChild(out);
+      (sec.querySelector(".ans")||sec).appendChild(tools);
+    }
+  })(secs[s]);
+}
+</script>
+</body>
+</html>
