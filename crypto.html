@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cryptography and Framing - Code Bank</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1b1f24;--mut:#5b6572;--ac:#2563eb;--bd:#d8dde4;--code:#f0f3f7;--outbg:#0f172a;--outtx:#d1fae5;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171c;--card:#1d2128;--tx:#e8ebef;--mut:#9aa4b2;--ac:#6ea0ff;--bd:#323944;--code:#12151a}}
+:root[data-theme="dark"]{--bg:#14171c;--card:#1d2128;--tx:#e8ebef;--mut:#9aa4b2;--ac:#6ea0ff;--bd:#323944;--code:#12151a}
+html{scroll-padding-top:60px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,Arial,sans-serif}
+header{padding:18px 16px 8px;max-width:900px;margin:auto}
+h1{margin:0;font-size:1.4rem}
+header p{margin:4px 0 0;color:var(--mut)}
+header a{color:var(--ac)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:8px 16px;max-width:900px;margin:auto;display:flex;flex-wrap:wrap;gap:6px;z-index:5}
+nav a{padding:4px 10px;border:1px solid var(--bd);border-radius:14px;color:var(--ac);text-decoration:none;font-size:.9rem;background:var(--card)}
+main{max-width:900px;margin:auto;padding:0 16px 40px}
+section{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;margin:14px 0}
+h2{margin:0 0 4px;font-size:1.1rem}
+.lbl{font-weight:700;color:var(--ac);margin:14px 0 4px;font-size:.9rem;text-transform:uppercase;letter-spacing:.03em}
+.qt{margin:4px 0}
+.steps{margin:4px 0;padding-left:22px;font-size:.93rem}
+.steps li{margin:3px 0}
+.file{margin:10px 0}
+.fh{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+button{background:var(--ac);color:#fff;border:0;border-radius:6px;padding:5px 12px;font-size:.85rem;cursor:pointer}
+textarea{width:100%;box-sizing:border-box;background:var(--code);color:var(--tx);border:1px solid var(--bd);border-radius:6px;padding:8px;font:13px/1.45 Consolas,monospace;resize:vertical;white-space:pre;overflow:auto}
+pre.out{margin:4px 0;background:var(--outbg);color:var(--outtx);padding:10px;border-radius:6px;font:13px/1.45 Consolas,monospace;overflow-x:auto;white-space:pre}
+</style>
+</head>
+<body>
+<header>
+  <h1>Cryptography and Framing - Practical Code Bank</h1>
+  <p>11 experiments in Python, each with the question, logic, complete code, real output and how to run it. Tap Copy on any file. <a href="index.html">Back to IP practicals</a></p>
+</header>
+<nav id="nav"></nav>
+<main>
+<section id="e1">
+<h2>1. Additive Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Additive cipher.<br>Plain text: “this message is easy to encrypt but hard to find the key”. Key: 15 (ignore the spaces between words).</p>
+<div class="lbl">Logic</div>
+<p class="qt">Encryption: C = (P + k) mod 26. Decryption: P = (C − k) mod 26. Letters are numbered A=0 … Z=25.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp1.py"># Additive Cipher: C = (P + k) mod 26,  P = (C - k) mod 26
+plain = "this message is easy to encrypt but hard to find the key"
+key = 15
+
+text = plain.replace(" ", "").upper()      # ignore spaces
+
+def encrypt(text, key):
+    result = ""
+    for ch in text:
+        result += chr((ord(ch) - 65 + key) % 26 + 65)
+    return result
+
+def decrypt(text, key):
+    result = ""
+    for ch in text:
+        result += chr((ord(ch) - 65 - key) % 26 + 65)
+    return result
+
+cipher = encrypt(text, key)
+print("Plain text  :", text)
+print("Key         :", key)
+print("Cipher text :", cipher)
+print("Decrypted   :", decrypt(cipher, key))
+</textarea></div>
+<div class="lbl">Output</div>
+<pre class="out">Plain text  : THISMESSAGEISEASYTOENCRYPTBUTHARDTOFINDTHEKEY
+Key         : 15
+Cipher text : IWXHBTHHPVTXHTPHNIDTCRGNEIQJIWPGSIDUXCSIWTZTN
+Decrypted   : THISMESSAGEISEASYTOENCRYPTBUTHARDTOFINDTHEKEY</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp1.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp1.py</b> (in IDLE press <b>F5</b>).</li><li>Compare the printed result with the output shown above.</li></ol>
+</section>
+
+<section id="e2">
+<h2>2. Caesar Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Caesar cipher.<br>Plain text: “this message is easy to encrypt but hard to find the key” (ignore the spaces between words).</p>
+<div class="lbl">Logic</div>
+<p class="qt">Caesar cipher is the additive cipher with the fixed key 3. Encryption: C = (P + 3) mod 26. Decryption: P = (C − 3) mod 26.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp2.py"># Caesar Cipher: additive cipher with a fixed key of 3
+plain = "this message is easy to encrypt but hard to find the key"
+key = 3
+
+text = plain.replace(" ", "").upper()      # ignore spaces
+
+def encrypt(text):
+    result = ""
+    for ch in text:
+        result += chr((ord(ch) - 65 + 3) % 26 + 65)
+    return result
+
+def decrypt(text):
+    result = ""
+    for ch in text:
+        result += chr((ord(ch) - 65 - 3) % 26 + 65)
+    return result
+
+cipher = encrypt(text)
+print("Plain text  :", text)
+print("Key         :", key)
+print("Cipher text :", cipher)
+print("Decrypted   :", decrypt(cipher))
+</textarea></div>
+<div class="lbl">Output</div>
+<pre class="out">Plain text  : THISMESSAGEISEASYTOENCRYPTBUTHARDTOFINDTHEKEY
+Key         : 3
+Cipher text : WKLVPHVVDJHLVHDVBWRHQFUBSWEXWKDUGWRILQGWKHNHB
+Decrypted   : THISMESSAGEISEASYTOENCRYPTBUTHARDTOFINDTHEKEY</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp2.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp2.py</b> (in IDLE press <b>F5</b>).</li><li>Compare the printed result with the output shown above.</li></ol>
+</section>
+
+<section id="e3">
+<h2>3. Shift Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the shift cipher.<br>Plain text: “this message is easy to encrypt but hard to find the key”. Key: 15 (ignore the spaces between words).</p>
+<div class="lbl">Logic</div>
+<p class="qt">Every letter is moved forward by the key using its position in the alphabet. Encryption: C = (P + k) mod 26. Decryption: P = (C − k) mod 26.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp3.py"># Shift Cipher: every letter is moved forward by the key
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+plain = "this message is easy to encrypt but hard to find the key"
+key = 15
+
+text = plain.replace(" ", "").upper()      # ignore spaces
+
+def shift_encrypt(text, key):
+    result = ""
+    for ch in text:
+        pos = alphabet.index(ch)
+        result += alphabet[(pos + key) % 26]
+    return result
+
+def shift_decrypt(text, key):
+    result = ""
+    for ch in text:
+        pos = alphabet.index(ch)
+        result += alphabet[(pos - key) % 26]
+    return result
+
+cipher = shift_encrypt(text, key)
+print("Plain text  :", text)
+print("Key         :", key)
+print("Cipher text :", cipher)
+print("Decrypted   :", shift_decrypt(cipher, key))
+</textarea></div>
+<div class="lbl">Output</div>
+<pre class="out">Plain text  : THISMESSAGEISEASYTOENCRYPTBUTHARDTOFINDTHEKEY
+Key         : 15
+Cipher text : IWXHBTHHPVTXHTPHNIDTCRGNEIQJIWPGSIDUXCSIWTZTN
+Decrypted   : THISMESSAGEISEASYTOENCRYPTBUTHARDTOFINDTHEKEY</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp3.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp3.py</b> (in IDLE press <b>F5</b>).</li><li>Compare the printed result with the output shown above.</li></ol>
+</section>
+
+<section id="e4">
+<h2>4. Affine Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Affine cipher.<br>Plain text: “hello”. Key: (7, 2) (ignore the spaces between words).</p>
+<div class="lbl">Logic</div>
+<p class="qt">Encryption: C = (a·P + b) mod 26. Decryption: P = a<sup>−1</sup>·(C − b) mod 26. Here a = 7 must have gcd(a, 26) = 1; its inverse is 15 because 7 × 15 = 105 = 1 mod 26.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp4.py"># Affine Cipher: C = (a*P + b) mod 26,   P = a_inverse * (C - b) mod 26
+plain = "hello"
+a, b = 7, 2
+
+text = plain.replace(" ", "").upper()      # ignore spaces
+
+def mod_inverse(a, m):
+    for i in range(1, m):
+        if (a * i) % m == 1:
+            return i
+
+def encrypt(text, a, b):
+    result = ""
+    for ch in text:
+        p = ord(ch) - 65
+        result += chr((a * p + b) % 26 + 65)
+    return result
+
+def decrypt(text, a, b):
+    a_inv = mod_inverse(a, 26)
+    result = ""
+    for ch in text:
+        c = ord(ch) - 65
+        result += chr((a_inv * (c - b)) % 26 + 65)
+    return result
+
+cipher = encrypt(text, a, b)
+print("Plain text   :", text)
+print("Key (a, b)   :", (a, b))
+print("Inverse of a :", mod_inverse(a, 26))
+print("Cipher text  :", cipher)
+print("Decrypted    :", decrypt(cipher, a, b))
+</textarea></div>
+<div class="lbl">Output</div>
+<pre class="out">Plain text   : HELLO
+Key (a, b)   : (7, 2)
+Inverse of a : 15
+Cipher text  : ZEBBW
+Decrypted    : HELLO</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp4.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp4.py</b> (in IDLE press <b>F5</b>).</li><li>Compare the printed result with the output shown above.</li></ol>
+</section>
+
+<section id="e5">
+<h2>5. Autokey Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Autokey cipher.<br>Plain text: “the house is being sold tonight”. Key: 7 (ignore the spaces between words).</p>
+<div class="lbl">Logic</div>
+<p class="qt">The key stream is the secret key followed by the plain text itself: 7, T, H, E, … Encryption: C<sub>i</sub> = (P<sub>i</sub> + K<sub>i</sub>) mod 26. While decrypting, each recovered letter becomes the next key.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp5.py"># Autokey Cipher: key stream = [key, P1, P2, P3, ...]
+plain = "the house is being sold tonight"
+key = 7
+
+text = plain.replace(" ", "").upper()      # ignore spaces
+
+def encrypt(text, key):
+    stream = [key]                         # first key value is the secret key
+    for ch in text:
+        stream.append(ord(ch) - 65)        # then the plain text itself
+    result = ""
+    for i in range(len(text)):
+        p = ord(text[i]) - 65
+        result += chr((p + stream[i]) % 26 + 65)
+    return result
+
+def decrypt(cipher, key):
+    result = ""
+    k = key
+    for ch in cipher:
+        p = (ord(ch) - 65 - k) % 26
+        result += chr(p + 65)
+        k = p                              # recovered letter becomes next key
+    return result
+
+cipher = encrypt(text, key)
+print("Plain text  :", text)
+print("Key         :", key)
+print("Cipher text :", cipher)
+print("Decrypted   :", decrypt(cipher, key))
+</textarea></div>
+<div class="lbl">Output</div>
+<pre class="out">Plain text  : THEHOUSEISBEINGSOLDTONIGHT
+Key         : 7
+Cipher text : AALLVIMWMATFMVTYGZOWHBVONA
+Decrypted   : THEHOUSEISBEINGSOLDTONIGHT</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp5.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp5.py</b> (in IDLE press <b>F5</b>).</li><li>Compare the printed result with the output shown above.</li></ol>
+</section>
+
+<section id="e6">
+<h2>6. Playfair Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Playfair cipher.<br>Plain text: “the key is hidden under the door pad”. Secret key: guidance.</p>
+<div class="lbl">Logic</div>
+<p class="qt">A 5 × 5 matrix is built from the key (I and J share a cell). Plain text is split into pairs; a double letter gets an X between them and an odd last letter gets an X. Same row: take the letter on the right. Same column: take the letter below. Otherwise: swap the rectangle corners.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp6.py"># Playfair Cipher (I and J share one cell)
+plain = "the key is hidden under the door pad"
+secret = "guidance"
+
+def make_matrix(key):
+    key = key.upper().replace("J", "I")
+    letters = ""
+    for ch in key + "ABCDEFGHIKLMNOPQRSTUVWXYZ":
+        if ch not in letters:
+            letters += ch
+    return [list(letters[i:i + 5]) for i in range(0, 25, 5)]
+
+def find(matrix, ch):
+    for r in range(5):
+        for c in range(5):
+            if matrix[r][c] == ch:
+                return r, c
+
+def make_pairs(text):
+    text = text.upper().replace(" ", "").replace("J", "I")
+    pairs = []
+    i = 0
+    while i &lt; len(text):
+        a = text[i]
+        b = text[i + 1] if i + 1 &lt; len(text) else "X"   # pad last letter
+        if a == b:                                      # same letters -&gt; insert X
+            pairs.append(a + "X")
+            i += 1
+        else:
+            pairs.append(a + b)
+            i += 2
+    return pairs
+
+def convert(pair, matrix, step):                        # step = +1 encrypt, -1 decrypt
+    r1, c1 = find(matrix, pair[0])
+    r2, c2 = find(matrix, pair[1])
+    if r1 == r2:                                        # same row
+        return matrix[r1][(c1 + step) % 5] + matrix[r2][(c2 + step) % 5]
+    if c1 == c2:                                        # same column
+        return matrix[(r1 + step) % 5][c1] + matrix[(r2 + step) % 5][c2]
+    return matrix[r1][c2] + matrix[r2][c1]              # rectangle
+
+matrix = make_matrix(secret)
+print("Key matrix:")
+for row in matrix:
+    print(" ".join(row))
+
+pairs = make_pairs(plain)
+print("Plain text pairs :", " ".join(pairs))
+
+cipher = ""
+for p in pairs:
+    cipher += convert(p, matrix, 1)
+print("Cipher text      :", cipher)
+
+decrypted = ""
+for i in range(0, len(cipher), 2):
+    decrypted += convert(cipher[i:i + 2], matrix, -1)
+print("Decrypted        :", decrypted)
+</textarea></div>
+<div class="lbl">Output</div>
+<pre class="out">Key matrix:
+G U I D A
+N C E B F
+H K L M O
+P Q R S T
+V W X Y Z
+Plain text pairs : TH EK EY IS HI DX DE NU ND ER TH ED OX OR PA DX
+Cipher text      : POCLBXDRLGIYIBCGBGLXPOBILZLTTGIY
+Decrypted        : THEKEYISHIDXDENUNDERTHEDOXORPADX</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp6.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp6.py</b> (in IDLE press <b>F5</b>).</li><li>Compare the printed result with the output shown above.</li></ol>
+</section>
+
+<section id="e7">
+<h2>7. Vigenere Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Vigenere cipher.<br>Plain text: “she is listening”. Keyword: pascal.</p>
+<div class="lbl">Logic</div>
+<p class="qt">The keyword is repeated along the plain text. Encryption: C = (P + K) mod 26. Decryption: P = (C − K) mod 26.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp7.py"># Vigenere Cipher: C = (P + K) mod 26 with the keyword repeated
+plain = "she is listening"
+keyword = "pascal"
+
+text = plain.replace(" ", "").upper()      # ignore spaces
+keyword = keyword.upper()
+
+def encrypt(text, keyword):
+    result = ""
+    for i in range(len(text)):
+        p = ord(text[i]) - 65
+        k = ord(keyword[i % len(keyword)]) - 65
+        result += chr((p + k) % 26 + 65)
+    return result
+
+def decrypt(text, keyword):
+    result = ""
+    for i in range(len(text)):
+        c = ord(text[i]) - 65
+        k = ord(keyword[i % len(keyword)]) - 65
+        result += chr((c - k) % 26 + 65)
+    return result
+
+cipher = encrypt(text, keyword)
+print("Plain text  :", text)
+print("Keyword     :", keyword)
+print("Cipher text :", cipher)
+print("Decrypted   :", decrypt(cipher, keyword))
+</textarea></div>
+<div class="lbl">Output</div>
+<pre class="out">Plain text  : SHEISLISTENING
+Keyword     : PASCAL
+Cipher text : HHWKSWXSLGNTCG
+Decrypted   : SHEISLISTENING</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp7.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp7.py</b> (in IDLE press <b>F5</b>).</li><li>Compare the printed result with the output shown above.</li></ol>
+</section>
+
+<section id="e8">
+<h2>8. Hill Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Hill cipher.<br>Plain text: “we live in an insecure world”. Key matrix: first row (03 02), second row (05 07).</p>
+<div class="lbl">Logic</div>
+<p class="qt">Letters are taken in pairs and multiplied by the key matrix: C = K·P mod 26. The determinant is 3×7 − 2×5 = 11, which has an inverse (19) mod 26, so the key is valid. Decryption uses the inverse matrix K<sup>−1</sup>. An odd length is padded with X.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp8.py"># Hill Cipher (2 x 2 key matrix): C = K * P mod 26
+plain = "we live in an insecure world"
+K = [[3, 2],
+     [5, 7]]
+
+text = plain.replace(" ", "").upper()      # ignore spaces
+if len(text) % 2 != 0:
+    text += "X"                            # pad to make pairs
+
+def mod_inverse(a, m):
+    for i in range(1, m):
+        if (a * i) % m == 1:
+            return i
+
+def process(text, M):
+    result = ""
+    for i in range(0, len(text), 2):
+        p1 = ord(text[i]) - 65
+        p2 = ord(text[i + 1]) - 65
+        c1 = (M[0][0] * p1 + M[0][1] * p2) % 26
+        c2 = (M[1][0] * p1 + M[1][1] * p2) % 26
+        result += chr(c1 + 65) + chr(c2 + 65)
+    return result
+
+# inverse key matrix: inverse(det) * adjoint mod 26
+det = (K[0][0] * K[1][1] - K[0][1] * K[1][0]) % 26
+d_inv = mod_inverse(det, 26)
+K_inv = [[(K[1][1] * d_inv) % 26, (-K[0][1] * d_inv) % 26],
+         [(-K[1][0] * d_inv) % 26, (K[0][0] * d_inv) % 26]]
+
+cipher = process(text, K)
+print("Plain text   :", text)
+print("Key matrix   :", K)
+print("Determinant  :", det, "  Inverse of det:", d_inv)
+print("Inverse key  :", K_inv)
+print("Cipher text  :", cipher)
+print("Decrypted    :", process(cipher, K_inv))
+</textarea></div>
+<div class="lbl">Output</div>
+<pre class="out">Plain text   : WELIVEINANINSECUREWORLDX
+Key matrix   : [[3, 2], [5, 7]]
+Determinant  : 11   Inverse of det: 19
+Inverse key  : [[3, 14], [9, 5]]
+Cipher text  : WIXHTDYBANYBKOUUHJQAVGDU
+Decrypted    : WELIVEINANINSECUREWORLDX</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp8.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp8.py</b> (in IDLE press <b>F5</b>).</li><li>Compare the printed result with the output shown above.</li></ol>
+</section>
+
+<section id="e9">
+<h2>9. Character Count Framing</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Character Count framing technique.<br>Input: A = 01000111, B = 11100011, FLAG = 01111110, ESC = 11100000. Frame: A B ESC FLAG.</p>
+<div class="lbl">Logic</div>
+<p class="qt">The first field of the frame holds the number of characters in the frame, including the count field itself. The receiver reads the count and then takes exactly that many characters. Weakness: if the count is corrupted, the receiver loses synchronisation.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp9.py"># Character Count Framing: first byte of the frame tells the frame length
+A    = "01000111"
+B    = "11100011"
+FLAG = "01111110"
+ESC  = "11100000"
+
+data = [A, B, ESC, FLAG]                   # FRAME = A B ESC FLAG
+
+# Sender: count includes the count byte itself
+count = len(data) + 1
+count_byte = format(count, "08b")
+frame = [count_byte] + data
+
+print("Data characters :", len(data))
+print("Count field     :", count, "-&gt;", count_byte)
+print("Frame sent      :", " ".join(frame))
+
+# Receiver: read the count, then take count-1 characters
+received = frame
+n = int(received[0], 2)
+print("Receiver reads count =", n)
+print("Data extracted  :", " ".join(received[1:n]))
+</textarea></div>
+<div class="lbl">Output</div>
+<pre class="out">Data characters : 4
+Count field     : 5 -&gt; 00000101
+Frame sent      : 00000101 01000111 11100011 11100000 01111110
+Receiver reads count = 5
+Data extracted  : 01000111 11100011 11100000 01111110</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp9.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp9.py</b> (in IDLE press <b>F5</b>).</li><li>Compare the printed result with the output shown above.</li></ol>
+</section>
+
+<section id="e10">
+<h2>10. Byte (Character) Stuffing</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Byte Stuffing (Character Stuffing) framing technique.<br>Input: A = 01000111, B = 11100011, FLAG = 01111110, ESC = 11100000. Frame: A B ESC FLAG.</p>
+<div class="lbl">Logic</div>
+<p class="qt">Each frame starts and ends with a FLAG byte. If a FLAG or ESC byte appears inside the data, the sender inserts an ESC byte in front of it. The receiver removes the flags and drops every ESC that was stuffed.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp10.py"># Byte (Character) Stuffing: put ESC before every FLAG or ESC found in the data
+A    = "01000111"
+B    = "11100011"
+FLAG = "01111110"
+ESC  = "11100000"
+
+data = [A, B, ESC, FLAG]                   # FRAME = A B ESC FLAG
+
+# Sender
+stuffed = []
+for byte in data:
+    if byte == FLAG or byte == ESC:
+        stuffed.append(ESC)                # stuff an ESC byte
+    stuffed.append(byte)
+
+frame = [FLAG] + stuffed + [FLAG]          # add starting and ending flag
+print("Original data :", " ".join(data))
+print("After stuffing:", " ".join(stuffed))
+print("Frame sent    :", " ".join(frame))
+
+# Receiver: remove flags, then remove the stuffed ESC
+body = frame[1:-1]
+destuffed = []
+i = 0
+while i &lt; len(body):
+    if body[i] == ESC:
+        i += 1                             # skip the stuffed ESC
+    destuffed.append(body[i])
+    i += 1
+print("After destuffing:", " ".join(destuffed))
+</textarea></div>
+<div class="lbl">Output</div>
+<pre class="out">Original data : 01000111 11100011 11100000 01111110
+After stuffing: 01000111 11100011 11100000 11100000 11100000 01111110
+Frame sent    : 01111110 01000111 11100011 11100000 11100000 11100000 01111110 01111110
+After destuffing: 01000111 11100011 11100000 01111110</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp10.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp10.py</b> (in IDLE press <b>F5</b>).</li><li>Compare the printed result with the output shown above.</li></ol>
+</section>
+
+<section id="e11">
+<h2>11. Bit Stuffing</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Bit Stuffing framing technique.<br>Input: A = 01000111, B = 11100011, FLAG = 01111110, ESC = 11100000. Frame: A B ESC FLAG.</p>
+<div class="lbl">Logic</div>
+<p class="qt">The flag 01111110 has six 1s in a row. To keep it unique, the sender inserts a 0 after every five consecutive 1s in the data. The receiver removes a 0 that follows five consecutive 1s.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp11.py"># Bit Stuffing: insert a 0 after every five consecutive 1s
+A    = "01000111"
+B    = "11100011"
+FLAG = "01111110"
+ESC  = "11100000"
+
+data = A + B + ESC + FLAG                  # FRAME = A B ESC FLAG as bits
+
+# Sender
+stuffed = ""
+ones = 0
+for bit in data:
+    stuffed += bit
+    if bit == "1":
+        ones += 1
+        if ones == 5:
+            stuffed += "0"                 # stuff a 0
+            ones = 0
+    else:
+        ones = 0
+
+frame = FLAG + stuffed + FLAG              # add starting and ending flag
+print("Original data  :", data)
+print("After stuffing :", stuffed)
+print("Frame sent     :", frame)
+
+# Receiver: remove flags, then remove the 0 after five 1s
+body = frame[len(FLAG):-len(FLAG)]
+destuffed = ""
+ones = 0
+i = 0
+while i &lt; len(body):
+    bit = body[i]
+    destuffed += bit
+    if bit == "1":
+        ones += 1
+        if ones == 5:
+            i += 1                         # skip the stuffed 0
+            ones = 0
+    else:
+        ones = 0
+    i += 1
+print("After destuffing:", destuffed)
+print("Same as original:", destuffed == data)
+</textarea></div>
+<div class="lbl">Output</div>
+<pre class="out">Original data  : 01000111111000111110000001111110
+After stuffing : 01000111110100011111000000011111010
+Frame sent     : 011111100100011111010001111100000001111101001111110
+After destuffing: 01000111111000111110000001111110
+Same as original: True</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp11.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp11.py</b> (in IDLE press <b>F5</b>).</li><li>Compare the printed result with the output shown above.</li></ol>
+</section>
+</main>
+<script>
+function copyText(t, btn) {
+  var done = function () { btn.textContent = "Copied!"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); };
+  var fallback = function () {
+    t.focus(); t.select();
+    try { document.execCommand("copy"); done(); } catch (e) { btn.textContent = "Press Ctrl+C"; }
+  };
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t.value).then(done, fallback);
+    else fallback();
+  } catch (e) { fallback(); }
+}
+var nav = document.getElementById("nav");
+var secs = document.querySelectorAll("section");
+for (var s = 0; s < secs.length; s++) {
+  (function (sec) {
+    var a = document.createElement("a");
+    a.href = "#" + sec.id;
+    a.textContent = "Exp " + sec.id.slice(1);
+    nav.appendChild(a);
+    var areas = sec.querySelectorAll("textarea");
+    for (var i = 0; i < areas.length; i++) {
+      (function (t) {
+        var w = document.createElement("div"); w.className = "file";
+        var h = document.createElement("div"); h.className = "fh";
+        var b = document.createElement("b"); b.textContent = t.dataset.f;
+        var btn = document.createElement("button"); btn.type = "button"; btn.textContent = "Copy";
+        btn.onclick = function () { copyText(t, btn); };
+        h.appendChild(b); h.appendChild(btn);
+        t.parentNode.insertBefore(w, t);
+        w.appendChild(h); w.appendChild(t);
+        t.readOnly = true; t.spellcheck = false; t.setAttribute("wrap", "off");
+        t.rows = Math.min(t.value.split("\n").length + 1, 40);
+      })(areas[i]);
+    }
+  })(secs[s]);
+}
+</script>
+</body>
+</html>
