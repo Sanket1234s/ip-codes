@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cryptography and Framing - Code Bank</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1b1f24;--mut:#5b6572;--ac:#2563eb;--bd:#d8dde4;--code:#f0f3f7;--outbg:#0f172a;--outtx:#d1fae5;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171c;--card:#1d2128;--tx:#e8ebef;--mut:#9aa4b2;--ac:#6ea0ff;--bd:#323944;--code:#12151a}}
+:root[data-theme="dark"]{--bg:#14171c;--card:#1d2128;--tx:#e8ebef;--mut:#9aa4b2;--ac:#6ea0ff;--bd:#323944;--code:#12151a}
+html{scroll-padding-top:60px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,Arial,sans-serif}
+header{padding:18px 16px 8px;max-width:900px;margin:auto}
+h1{margin:0;font-size:1.4rem}
+header p{margin:4px 0 0;color:var(--mut)}
+header a{color:var(--ac)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:8px 16px;max-width:900px;margin:auto;display:flex;flex-wrap:wrap;gap:6px;z-index:5}
+nav a{padding:4px 10px;border:1px solid var(--bd);border-radius:14px;color:var(--ac);text-decoration:none;font-size:.9rem;background:var(--card)}
+main{max-width:900px;margin:auto;padding:0 16px 40px}
+section{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;margin:14px 0}
+h2{margin:0 0 4px;font-size:1.1rem}
+.lbl{font-weight:700;color:var(--ac);margin:14px 0 4px;font-size:.9rem;text-transform:uppercase;letter-spacing:.03em}
+.qt{margin:4px 0}
+.steps{margin:4px 0;padding-left:22px;font-size:.93rem}
+.steps li{margin:3px 0}
+.file{margin:10px 0}
+.fh{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+button{background:var(--ac);color:#fff;border:0;border-radius:6px;padding:5px 12px;font-size:.85rem;cursor:pointer}
+textarea{width:100%;box-sizing:border-box;background:var(--code);color:var(--tx);border:1px solid var(--bd);border-radius:6px;padding:8px;font:13px/1.45 Consolas,monospace;resize:vertical;white-space:pre;overflow:auto}
+pre.out{max-height:480px;margin:4px 0;background:var(--outbg);color:var(--outtx);padding:10px;border-radius:6px;font:13px/1.45 Consolas,monospace;overflow-x:auto;white-space:pre}
+</style>
+</head>
+<body>
+<header>
+  <h1>Cryptography and Framing - Practical Code Bank</h1>
+  <p>11 experiments in Python, each with the question, logic, complete code, step-wise output and how to run it. Tap Copy on any file. <a href="index.html">Back to IP practicals</a></p>
+</header>
+<nav id="nav"></nav>
+<main>
+<section id="e1">
+<h2>1. Additive Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Additive cipher.<br>Plain text: “this message is easy to encrypt but hard to find the key”. Key: 15 (ignore the spaces between words).</p>
+<div class="lbl">Logic</div>
+<p class="qt">Encryption: C = (P + k) mod 26. Decryption: P = (C − k) mod 26. Letters are numbered A=0 … Z=25.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp1.py"># Additive Cipher: C = (P + k) mod 26,  P = (C - k) mod 26
+plain = "this message is easy to encrypt but hard to find the key"
+key = 15
+
+print("STEP 1: Remove the spaces and use capital letters")
+text = plain.replace(" ", "").upper()
+print(text)
+print()
+
+print("STEP 2: Encrypt every letter using C = (P + key) mod 26   (key = %d)" % key)
+print("Letter   P   P+key   mod 26   Cipher")
+cipher = ""
+for ch in text:
+    p = ord(ch) - 65
+    total = p + key
+    c = total % 26
+    cipher += chr(c + 65)
+    print(f"  {ch}     {p:2d}    {total:3d}      {c:2d}       {chr(c + 65)}")
+print()
+
+print("STEP 3: Cipher text")
+print(cipher)
+print()
+
+print("STEP 4: Decrypt every letter using P = (C - key) mod 26")
+print("Letter   C   C-key   mod 26   Plain")
+decrypted = ""
+for ch in cipher:
+    c = ord(ch) - 65
+    diff = c - key
+    p = diff % 26
+    decrypted += chr(p + 65)
+    print(f"  {ch}     {c:2d}    {diff:3d}      {p:2d}       {chr(p + 65)}")
+print()
+
+print("STEP 5: Decrypted text")
+print(decrypted)
+</textarea></div>
+<div class="lbl">Output (step-wise execution)</div>
+<pre class="out">STEP 1: Remove the spaces and use capital letters
+THISMESSAGEISEASYTOENCRYPTBUTHARDTOFINDTHEKEY
+
+STEP 2: Encrypt every letter using C = (P + key) mod 26   (key = 15)
+Letter   P   P+key   mod 26   Cipher
+  T     19     34       8       I
+  H      7     22      22       W
+  I      8     23      23       X
+  S     18     33       7       H
+  M     12     27       1       B
+  E      4     19      19       T
+  S     18     33       7       H
+  S     18     33       7       H
+  A      0     15      15       P
+  G      6     21      21       V
+  E      4     19      19       T
+  I      8     23      23       X
+  S     18     33       7       H
+  E      4     19      19       T
+  A      0     15      15       P
+  S     18     33       7       H
+  Y     24     39      13       N
+  T     19     34       8       I
+  O     14     29       3       D
+  E      4     19      19       T
+  N     13     28       2       C
+  C      2     17      17       R
+  R     17     32       6       G
+  Y     24     39      13       N
+  P     15     30       4       E
+  T     19     34       8       I
+  B      1     16      16       Q
+  U     20     35       9       J
+  T     19     34       8       I
+  H      7     22      22       W
+  A      0     15      15       P
+  R     17     32       6       G
+  D      3     18      18       S
+  T     19     34       8       I
+  O     14     29       3       D
+  F      5     20      20       U
+  I      8     23      23       X
+  N     13     28       2       C
+  D      3     18      18       S
+  T     19     34       8       I
+  H      7     22      22       W
+  E      4     19      19       T
+  K     10     25      25       Z
+  E      4     19      19       T
+  Y     24     39      13       N
+
+STEP 3: Cipher text
+IWXHBTHHPVTXHTPHNIDTCRGNEIQJIWPGSIDUXCSIWTZTN
+
+STEP 4: Decrypt every letter using P = (C - key) mod 26
+Letter   C   C-key   mod 26   Plain
+  I      8     -7      19       T
+  W     22      7       7       H
+  X     23      8       8       I
+  H      7     -8      18       S
+  B      1    -14      12       M
+  T     19      4       4       E
+  H      7     -8      18       S
+  H      7     -8      18       S
+  P     15      0       0       A
+  V     21      6       6       G
+  T     19      4       4       E
+  X     23      8       8       I
+  H      7     -8      18       S
+  T     19      4       4       E
+  P     15      0       0       A
+  H      7     -8      18       S
+  N     13     -2      24       Y
+  I      8     -7      19       T
+  D      3    -12      14       O
+  T     19      4       4       E
+  C      2    -13      13       N
+  R     17      2       2       C
+  G      6     -9      17       R
+  N     13     -2      24       Y
+  E      4    -11      15       P
+  I      8     -7      19       T
+  Q     16      1       1       B
+  J      9     -6      20       U
+  I      8     -7      19       T
+  W     22      7       7       H
+  P     15      0       0       A
+  G      6     -9      17       R
+  S     18      3       3       D
+  I      8     -7      19       T
+  D      3    -12      14       O
+  U     20      5       5       F
+  X     23      8       8       I
+  C      2    -13      13       N
+  S     18      3       3       D
+  I      8     -7      19       T
+  W     22      7       7       H
+  T     19      4       4       E
+  Z     25     10      10       K
+  T     19      4       4       E
+  N     13     -2      24       Y
+
+STEP 5: Decrypted text
+THISMESSAGEISEASYTOENCRYPTBUTHARDTOFINDTHEKEY</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp1.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp1.py</b> (in IDLE press <b>F5</b>).</li><li>The program prints every step as shown in the output above. Compare your screen with it.</li></ol>
+</section>
+
+<section id="e2">
+<h2>2. Caesar Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Caesar cipher.<br>Plain text: “this message is easy to encrypt but hard to find the key” (ignore the spaces between words).</p>
+<div class="lbl">Logic</div>
+<p class="qt">Caesar cipher is the additive cipher with the fixed key 3. Encryption: C = (P + 3) mod 26. Decryption: P = (C − 3) mod 26.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp2.py"># Caesar Cipher: additive cipher with the fixed key 3
+plain = "this message is easy to encrypt but hard to find the key"
+key = 3
+
+print("STEP 1: Remove the spaces and use capital letters")
+text = plain.replace(" ", "").upper()
+print(text)
+print()
+
+print("STEP 2: Encrypt every letter using C = (P + 3) mod 26")
+print("Letter   P   P+3   mod 26   Cipher")
+cipher = ""
+for ch in text:
+    p = ord(ch) - 65
+    total = p + key
+    c = total % 26
+    cipher += chr(c + 65)
+    print(f"  {ch}     {p:2d}   {total:3d}     {c:2d}       {chr(c + 65)}")
+print()
+
+print("STEP 3: Cipher text")
+print(cipher)
+print()
+
+print("STEP 4: Decrypt every letter using P = (C - 3) mod 26")
+print("Letter   C   C-3   mod 26   Plain")
+decrypted = ""
+for ch in cipher:
+    c = ord(ch) - 65
+    diff = c - key
+    p = diff % 26
+    decrypted += chr(p + 65)
+    print(f"  {ch}     {c:2d}   {diff:3d}     {p:2d}       {chr(p + 65)}")
+print()
+
+print("STEP 5: Decrypted text")
+print(decrypted)
+</textarea></div>
+<div class="lbl">Output (step-wise execution)</div>
+<pre class="out">STEP 1: Remove the spaces and use capital letters
+THISMESSAGEISEASYTOENCRYPTBUTHARDTOFINDTHEKEY
+
+STEP 2: Encrypt every letter using C = (P + 3) mod 26
+Letter   P   P+3   mod 26   Cipher
+  T     19    22     22       W
+  H      7    10     10       K
+  I      8    11     11       L
+  S     18    21     21       V
+  M     12    15     15       P
+  E      4     7      7       H
+  S     18    21     21       V
+  S     18    21     21       V
+  A      0     3      3       D
+  G      6     9      9       J
+  E      4     7      7       H
+  I      8    11     11       L
+  S     18    21     21       V
+  E      4     7      7       H
+  A      0     3      3       D
+  S     18    21     21       V
+  Y     24    27      1       B
+  T     19    22     22       W
+  O     14    17     17       R
+  E      4     7      7       H
+  N     13    16     16       Q
+  C      2     5      5       F
+  R     17    20     20       U
+  Y     24    27      1       B
+  P     15    18     18       S
+  T     19    22     22       W
+  B      1     4      4       E
+  U     20    23     23       X
+  T     19    22     22       W
+  H      7    10     10       K
+  A      0     3      3       D
+  R     17    20     20       U
+  D      3     6      6       G
+  T     19    22     22       W
+  O     14    17     17       R
+  F      5     8      8       I
+  I      8    11     11       L
+  N     13    16     16       Q
+  D      3     6      6       G
+  T     19    22     22       W
+  H      7    10     10       K
+  E      4     7      7       H
+  K     10    13     13       N
+  E      4     7      7       H
+  Y     24    27      1       B
+
+STEP 3: Cipher text
+WKLVPHVVDJHLVHDVBWRHQFUBSWEXWKDUGWRILQGWKHNHB
+
+STEP 4: Decrypt every letter using P = (C - 3) mod 26
+Letter   C   C-3   mod 26   Plain
+  W     22    19     19       T
+  K     10     7      7       H
+  L     11     8      8       I
+  V     21    18     18       S
+  P     15    12     12       M
+  H      7     4      4       E
+  V     21    18     18       S
+  V     21    18     18       S
+  D      3     0      0       A
+  J      9     6      6       G
+  H      7     4      4       E
+  L     11     8      8       I
+  V     21    18     18       S
+  H      7     4      4       E
+  D      3     0      0       A
+  V     21    18     18       S
+  B      1    -2     24       Y
+  W     22    19     19       T
+  R     17    14     14       O
+  H      7     4      4       E
+  Q     16    13     13       N
+  F      5     2      2       C
+  U     20    17     17       R
+  B      1    -2     24       Y
+  S     18    15     15       P
+  W     22    19     19       T
+  E      4     1      1       B
+  X     23    20     20       U
+  W     22    19     19       T
+  K     10     7      7       H
+  D      3     0      0       A
+  U     20    17     17       R
+  G      6     3      3       D
+  W     22    19     19       T
+  R     17    14     14       O
+  I      8     5      5       F
+  L     11     8      8       I
+  Q     16    13     13       N
+  G      6     3      3       D
+  W     22    19     19       T
+  K     10     7      7       H
+  H      7     4      4       E
+  N     13    10     10       K
+  H      7     4      4       E
+  B      1    -2     24       Y
+
+STEP 5: Decrypted text
+THISMESSAGEISEASYTOENCRYPTBUTHARDTOFINDTHEKEY</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp2.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp2.py</b> (in IDLE press <b>F5</b>).</li><li>The program prints every step as shown in the output above. Compare your screen with it.</li></ol>
+</section>
+
+<section id="e3">
+<h2>3. Shift Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the shift cipher.<br>Plain text: “this message is easy to encrypt but hard to find the key”. Key: 15 (ignore the spaces between words).</p>
+<div class="lbl">Logic</div>
+<p class="qt">Every letter is moved forward by the key using its position in the alphabet. Encryption: C = (P + k) mod 26. Decryption: P = (C − k) mod 26.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp3.py"># Shift Cipher: every letter is moved forward by the key
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+plain = "this message is easy to encrypt but hard to find the key"
+key = 15
+
+print("STEP 1: Write the alphabet with positions")
+for i in range(26):
+    print(alphabet[i] + "=" + str(i), end="  ")
+print("\n")
+
+print("STEP 2: Remove the spaces and use capital letters")
+text = plain.replace(" ", "").upper()
+print(text)
+print()
+
+print("STEP 3: Shift every letter forward by the key (key = %d)" % key)
+print("Letter  Position  New position (pos+key) mod 26   Cipher")
+cipher = ""
+for ch in text:
+    pos = alphabet.index(ch)
+    new = (pos + key) % 26
+    cipher += alphabet[new]
+    print(f"  {ch}       {pos:2d}                 {new:2d}                     {alphabet[new]}")
+print()
+
+print("STEP 4: Cipher text")
+print(cipher)
+print()
+
+print("STEP 5: Decrypt by shifting every letter back by the key")
+print("Letter  Position  New position (pos-key) mod 26   Plain")
+decrypted = ""
+for ch in cipher:
+    pos = alphabet.index(ch)
+    new = (pos - key) % 26
+    decrypted += alphabet[new]
+    print(f"  {ch}       {pos:2d}                 {new:2d}                     {alphabet[new]}")
+print()
+
+print("STEP 6: Decrypted text")
+print(decrypted)
+</textarea></div>
+<div class="lbl">Output (step-wise execution)</div>
+<pre class="out">STEP 1: Write the alphabet with positions
+A=0  B=1  C=2  D=3  E=4  F=5  G=6  H=7  I=8  J=9  K=10  L=11  M=12  N=13  O=14  P=15  Q=16  R=17  S=18  T=19  U=20  V=21  W=22  X=23  Y=24  Z=25  
+
+STEP 2: Remove the spaces and use capital letters
+THISMESSAGEISEASYTOENCRYPTBUTHARDTOFINDTHEKEY
+
+STEP 3: Shift every letter forward by the key (key = 15)
+Letter  Position  New position (pos+key) mod 26   Cipher
+  T       19                  8                     I
+  H        7                 22                     W
+  I        8                 23                     X
+  S       18                  7                     H
+  M       12                  1                     B
+  E        4                 19                     T
+  S       18                  7                     H
+  S       18                  7                     H
+  A        0                 15                     P
+  G        6                 21                     V
+  E        4                 19                     T
+  I        8                 23                     X
+  S       18                  7                     H
+  E        4                 19                     T
+  A        0                 15                     P
+  S       18                  7                     H
+  Y       24                 13                     N
+  T       19                  8                     I
+  O       14                  3                     D
+  E        4                 19                     T
+  N       13                  2                     C
+  C        2                 17                     R
+  R       17                  6                     G
+  Y       24                 13                     N
+  P       15                  4                     E
+  T       19                  8                     I
+  B        1                 16                     Q
+  U       20                  9                     J
+  T       19                  8                     I
+  H        7                 22                     W
+  A        0                 15                     P
+  R       17                  6                     G
+  D        3                 18                     S
+  T       19                  8                     I
+  O       14                  3                     D
+  F        5                 20                     U
+  I        8                 23                     X
+  N       13                  2                     C
+  D        3                 18                     S
+  T       19                  8                     I
+  H        7                 22                     W
+  E        4                 19                     T
+  K       10                 25                     Z
+  E        4                 19                     T
+  Y       24                 13                     N
+
+STEP 4: Cipher text
+IWXHBTHHPVTXHTPHNIDTCRGNEIQJIWPGSIDUXCSIWTZTN
+
+STEP 5: Decrypt by shifting every letter back by the key
+Letter  Position  New position (pos-key) mod 26   Plain
+  I        8                 19                     T
+  W       22                  7                     H
+  X       23                  8                     I
+  H        7                 18                     S
+  B        1                 12                     M
+  T       19                  4                     E
+  H        7                 18                     S
+  H        7                 18                     S
+  P       15                  0                     A
+  V       21                  6                     G
+  T       19                  4                     E
+  X       23                  8                     I
+  H        7                 18                     S
+  T       19                  4                     E
+  P       15                  0                     A
+  H        7                 18                     S
+  N       13                 24                     Y
+  I        8                 19                     T
+  D        3                 14                     O
+  T       19                  4                     E
+  C        2                 13                     N
+  R       17                  2                     C
+  G        6                 17                     R
+  N       13                 24                     Y
+  E        4                 15                     P
+  I        8                 19                     T
+  Q       16                  1                     B
+  J        9                 20                     U
+  I        8                 19                     T
+  W       22                  7                     H
+  P       15                  0                     A
+  G        6                 17                     R
+  S       18                  3                     D
+  I        8                 19                     T
+  D        3                 14                     O
+  U       20                  5                     F
+  X       23                  8                     I
+  C        2                 13                     N
+  S       18                  3                     D
+  I        8                 19                     T
+  W       22                  7                     H
+  T       19                  4                     E
+  Z       25                 10                     K
+  T       19                  4                     E
+  N       13                 24                     Y
+
+STEP 6: Decrypted text
+THISMESSAGEISEASYTOENCRYPTBUTHARDTOFINDTHEKEY</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp3.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp3.py</b> (in IDLE press <b>F5</b>).</li><li>The program prints every step as shown in the output above. Compare your screen with it.</li></ol>
+</section>
+
+<section id="e4">
+<h2>4. Affine Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Affine cipher.<br>Plain text: “hello”. Key: (7, 2) (ignore the spaces between words).</p>
+<div class="lbl">Logic</div>
+<p class="qt">Encryption: C = (a·P + b) mod 26. Decryption: P = a<sup>−1</sup>·(C − b) mod 26. Here a = 7 must have gcd(a, 26) = 1; its inverse is 15 because 7 × 15 = 105 = 1 mod 26.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp4.py"># Affine Cipher: C = (a*P + b) mod 26,   P = a_inverse * (C - b) mod 26
+import math
+plain = "hello"
+a, b = 7, 2
+
+print("STEP 1: Remove the spaces and use capital letters")
+text = plain.replace(" ", "").upper()
+print(text)
+print()
+
+print("STEP 2: Check that a and 26 have no common factor")
+print(f"gcd({a}, 26) = {math.gcd(a, 26)}  -&gt; key is valid")
+print()
+
+print("STEP 3: Find the inverse of a (a x inverse mod 26 = 1)")
+a_inv = 0
+for i in range(1, 26):
+    if (a * i) % 26 == 1:
+        a_inv = i
+        break
+print(f"{a} x {a_inv} = {a * a_inv},  {a * a_inv} mod 26 = {(a * a_inv) % 26}  -&gt; inverse = {a_inv}")
+print()
+
+print(f"STEP 4: Encrypt using C = ({a} x P + {b}) mod 26")
+print("Letter   P   a*P   a*P+b   mod 26   Cipher")
+cipher = ""
+for ch in text:
+    p = ord(ch) - 65
+    ap = a * p
+    total = ap + b
+    c = total % 26
+    cipher += chr(c + 65)
+    print(f"  {ch}     {p:2d}   {ap:3d}    {total:3d}      {c:2d}       {chr(c + 65)}")
+print()
+
+print("STEP 5: Cipher text")
+print(cipher)
+print()
+
+print(f"STEP 6: Decrypt using P = {a_inv} x (C - {b}) mod 26")
+print("Letter   C   C-b   inv*(C-b)   mod 26   Plain")
+decrypted = ""
+for ch in cipher:
+    c = ord(ch) - 65
+    diff = c - b
+    prod = a_inv * diff
+    p = prod % 26
+    decrypted += chr(p + 65)
+    print(f"  {ch}     {c:2d}   {diff:3d}      {prod:4d}       {p:2d}       {chr(p + 65)}")
+print()
+
+print("STEP 7: Decrypted text")
+print(decrypted)
+</textarea></div>
+<div class="lbl">Output (step-wise execution)</div>
+<pre class="out">STEP 1: Remove the spaces and use capital letters
+HELLO
+
+STEP 2: Check that a and 26 have no common factor
+gcd(7, 26) = 1  -&gt; key is valid
+
+STEP 3: Find the inverse of a (a x inverse mod 26 = 1)
+7 x 15 = 105,  105 mod 26 = 1  -&gt; inverse = 15
+
+STEP 4: Encrypt using C = (7 x P + 2) mod 26
+Letter   P   a*P   a*P+b   mod 26   Cipher
+  H      7    49     51      25       Z
+  E      4    28     30       4       E
+  L     11    77     79       1       B
+  L     11    77     79       1       B
+  O     14    98    100      22       W
+
+STEP 5: Cipher text
+ZEBBW
+
+STEP 6: Decrypt using P = 15 x (C - 2) mod 26
+Letter   C   C-b   inv*(C-b)   mod 26   Plain
+  Z     25    23       345        7       H
+  E      4     2        30        4       E
+  B      1    -1       -15       11       L
+  B      1    -1       -15       11       L
+  W     22    20       300       14       O
+
+STEP 7: Decrypted text
+HELLO</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp4.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp4.py</b> (in IDLE press <b>F5</b>).</li><li>The program prints every step as shown in the output above. Compare your screen with it.</li></ol>
+</section>
+
+<section id="e5">
+<h2>5. Autokey Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Autokey cipher.<br>Plain text: “the house is being sold tonight”. Key: 7 (ignore the spaces between words).</p>
+<div class="lbl">Logic</div>
+<p class="qt">The key stream is the secret key followed by the plain text itself: 7, T, H, E, … Encryption: C<sub>i</sub> = (P<sub>i</sub> + K<sub>i</sub>) mod 26. While decrypting, each recovered letter becomes the next key.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp5.py"># Autokey Cipher: key stream = [key, P1, P2, P3, ...]
+plain = "the house is being sold tonight"
+key = 7
+
+print("STEP 1: Remove the spaces and use capital letters")
+text = plain.replace(" ", "").upper()
+print(text)
+print()
+
+print("STEP 2: Build the key stream = secret key, then the plain text itself")
+stream = [key]
+for ch in text[:-1]:
+    stream.append(ord(ch) - 65)
+print(stream)
+print()
+
+print("STEP 3: Encrypt every letter using C = (P + K) mod 26")
+print("Letter   P    K   P+K   mod 26   Cipher")
+cipher = ""
+for i in range(len(text)):
+    p = ord(text[i]) - 65
+    k = stream[i]
+    total = p + k
+    c = total % 26
+    cipher += chr(c + 65)
+    print(f"  {text[i]}     {p:2d}   {k:2d}   {total:3d}     {c:2d}       {chr(c + 65)}")
+print()
+
+print("STEP 4: Cipher text")
+print(cipher)
+print()
+
+print("STEP 5: Decrypt - every recovered letter becomes the next key")
+print("Letter   C    K   C-K   mod 26   Plain")
+decrypted = ""
+k = key
+for ch in cipher:
+    c = ord(ch) - 65
+    diff = c - k
+    p = diff % 26
+    decrypted += chr(p + 65)
+    print(f"  {ch}     {c:2d}   {k:2d}   {diff:3d}     {p:2d}       {chr(p + 65)}")
+    k = p
+print()
+
+print("STEP 6: Decrypted text")
+print(decrypted)
+</textarea></div>
+<div class="lbl">Output (step-wise execution)</div>
+<pre class="out">STEP 1: Remove the spaces and use capital letters
+THEHOUSEISBEINGSOLDTONIGHT
+
+STEP 2: Build the key stream = secret key, then the plain text itself
+[7, 19, 7, 4, 7, 14, 20, 18, 4, 8, 18, 1, 4, 8, 13, 6, 18, 14, 11, 3, 19, 14, 13, 8, 6, 7]
+
+STEP 3: Encrypt every letter using C = (P + K) mod 26
+Letter   P    K   P+K   mod 26   Cipher
+  T     19    7    26      0       A
+  H      7   19    26      0       A
+  E      4    7    11     11       L
+  H      7    4    11     11       L
+  O     14    7    21     21       V
+  U     20   14    34      8       I
+  S     18   20    38     12       M
+  E      4   18    22     22       W
+  I      8    4    12     12       M
+  S     18    8    26      0       A
+  B      1   18    19     19       T
+  E      4    1     5      5       F
+  I      8    4    12     12       M
+  N     13    8    21     21       V
+  G      6   13    19     19       T
+  S     18    6    24     24       Y
+  O     14   18    32      6       G
+  L     11   14    25     25       Z
+  D      3   11    14     14       O
+  T     19    3    22     22       W
+  O     14   19    33      7       H
+  N     13   14    27      1       B
+  I      8   13    21     21       V
+  G      6    8    14     14       O
+  H      7    6    13     13       N
+  T     19    7    26      0       A
+
+STEP 4: Cipher text
+AALLVIMWMATFMVTYGZOWHBVONA
+
+STEP 5: Decrypt - every recovered letter becomes the next key
+Letter   C    K   C-K   mod 26   Plain
+  A      0    7    -7     19       T
+  A      0   19   -19      7       H
+  L     11    7     4      4       E
+  L     11    4     7      7       H
+  V     21    7    14     14       O
+  I      8   14    -6     20       U
+  M     12   20    -8     18       S
+  W     22   18     4      4       E
+  M     12    4     8      8       I
+  A      0    8    -8     18       S
+  T     19   18     1      1       B
+  F      5    1     4      4       E
+  M     12    4     8      8       I
+  V     21    8    13     13       N
+  T     19   13     6      6       G
+  Y     24    6    18     18       S
+  G      6   18   -12     14       O
+  Z     25   14    11     11       L
+  O     14   11     3      3       D
+  W     22    3    19     19       T
+  H      7   19   -12     14       O
+  B      1   14   -13     13       N
+  V     21   13     8      8       I
+  O     14    8     6      6       G
+  N     13    6     7      7       H
+  A      0    7    -7     19       T
+
+STEP 6: Decrypted text
+THEHOUSEISBEINGSOLDTONIGHT</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp5.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp5.py</b> (in IDLE press <b>F5</b>).</li><li>The program prints every step as shown in the output above. Compare your screen with it.</li></ol>
+</section>
+
+<section id="e6">
+<h2>6. Playfair Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Playfair cipher.<br>Plain text: “the key is hidden under the door pad”. Secret key: guidance.</p>
+<div class="lbl">Logic</div>
+<p class="qt">A 5 × 5 matrix is built from the key (I and J share a cell). Plain text is split into pairs; a double letter gets an X between them and an odd last letter gets an X. Same row: take the letter on the right. Same column: take the letter below. Otherwise: swap the rectangle corners.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp6.py"># Playfair Cipher (I and J share one cell)
+plain = "the key is hidden under the door pad"
+secret = "guidance"
+
+def make_matrix(key):
+    key = key.upper().replace("J", "I")
+    letters = ""
+    for ch in key + "ABCDEFGHIKLMNOPQRSTUVWXYZ":
+        if ch not in letters:
+            letters += ch
+    return [list(letters[i:i + 5]) for i in range(0, 25, 5)]
+
+def find(matrix, ch):
+    for r in range(5):
+        for c in range(5):
+            if matrix[r][c] == ch:
+                return r, c
+
+def make_pairs(text):
+    text = text.upper().replace(" ", "").replace("J", "I")
+    pairs = []
+    i = 0
+    while i &lt; len(text):
+        a = text[i]
+        b = text[i + 1] if i + 1 &lt; len(text) else "X"
+        if a == b:
+            pairs.append(a + "X")
+            i += 1
+        else:
+            pairs.append(a + b)
+            i += 2
+    return pairs
+
+def convert(pair, matrix, step):                 # step = +1 encrypt, -1 decrypt
+    r1, c1 = find(matrix, pair[0])
+    r2, c2 = find(matrix, pair[1])
+    if r1 == r2:
+        word = "right" if step == 1 else "left"
+        return matrix[r1][(c1 + step) % 5] + matrix[r2][(c2 + step) % 5], "same row, move " + word
+    if c1 == c2:
+        word = "down" if step == 1 else "up"
+        return matrix[(r1 + step) % 5][c1] + matrix[(r2 + step) % 5][c2], "same column, move " + word
+    return matrix[r1][c2] + matrix[r2][c1], "rectangle, swap the columns"
+
+print("STEP 1: Build the 5 x 5 key matrix from the key '%s'" % secret)
+print("(key letters first without repeats, then the rest of the alphabet, I = J)")
+matrix = make_matrix(secret)
+for row in matrix:
+    print("  " + " ".join(row))
+print()
+
+print("STEP 2: Remove spaces and make pairs (insert X between double letters, pad with X)")
+pairs = make_pairs(plain)
+print(" ".join(pairs))
+print()
+
+print("STEP 3: Encrypt every pair")
+print("Pair   Rule                          Cipher")
+cipher = ""
+for p in pairs:
+    res, rule = convert(p, matrix, 1)
+    cipher += res
+    print(f" {p}    {rule:28s}   {res}")
+print()
+
+print("STEP 4: Cipher text")
+print(cipher)
+print()
+
+print("STEP 5: Decrypt every pair (move left / up, rectangle stays the same)")
+print("Pair   Rule                          Plain")
+decrypted = ""
+for i in range(0, len(cipher), 2):
+    p = cipher[i:i + 2]
+    res, rule = convert(p, matrix, -1)
+    decrypted += res
+    print(f" {p}    {rule:28s}   {res}")
+print()
+
+print("STEP 6: Decrypted text (X letters are the padding added in step 2)")
+print(decrypted)
+</textarea></div>
+<div class="lbl">Output (step-wise execution)</div>
+<pre class="out">STEP 1: Build the 5 x 5 key matrix from the key 'guidance'
+(key letters first without repeats, then the rest of the alphabet, I = J)
+  G U I D A
+  N C E B F
+  H K L M O
+  P Q R S T
+  V W X Y Z
+
+STEP 2: Remove spaces and make pairs (insert X between double letters, pad with X)
+TH EK EY IS HI DX DE NU ND ER TH ED OX OR PA DX
+
+STEP 3: Encrypt every pair
+Pair   Rule                          Cipher
+ TH    rectangle, swap the columns    PO
+ EK    rectangle, swap the columns    CL
+ EY    rectangle, swap the columns    BX
+ IS    rectangle, swap the columns    DR
+ HI    rectangle, swap the columns    LG
+ DX    rectangle, swap the columns    IY
+ DE    rectangle, swap the columns    IB
+ NU    rectangle, swap the columns    CG
+ ND    rectangle, swap the columns    BG
+ ER    same column, move down         LX
+ TH    rectangle, swap the columns    PO
+ ED    rectangle, swap the columns    BI
+ OX    rectangle, swap the columns    LZ
+ OR    rectangle, swap the columns    LT
+ PA    rectangle, swap the columns    TG
+ DX    rectangle, swap the columns    IY
+
+STEP 4: Cipher text
+POCLBXDRLGIYIBCGBGLXPOBILZLTTGIY
+
+STEP 5: Decrypt every pair (move left / up, rectangle stays the same)
+Pair   Rule                          Plain
+ PO    rectangle, swap the columns    TH
+ CL    rectangle, swap the columns    EK
+ BX    rectangle, swap the columns    EY
+ DR    rectangle, swap the columns    IS
+ LG    rectangle, swap the columns    HI
+ IY    rectangle, swap the columns    DX
+ IB    rectangle, swap the columns    DE
+ CG    rectangle, swap the columns    NU
+ BG    rectangle, swap the columns    ND
+ LX    same column, move up           ER
+ PO    rectangle, swap the columns    TH
+ BI    rectangle, swap the columns    ED
+ LZ    rectangle, swap the columns    OX
+ LT    rectangle, swap the columns    OR
+ TG    rectangle, swap the columns    PA
+ IY    rectangle, swap the columns    DX
+
+STEP 6: Decrypted text (X letters are the padding added in step 2)
+THEKEYISHIDXDENUNDERTHEDOXORPADX</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp6.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp6.py</b> (in IDLE press <b>F5</b>).</li><li>The program prints every step as shown in the output above. Compare your screen with it.</li></ol>
+</section>
+
+<section id="e7">
+<h2>7. Vigenere Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Vigenere cipher.<br>Plain text: “she is listening”. Keyword: pascal.</p>
+<div class="lbl">Logic</div>
+<p class="qt">The keyword is repeated along the plain text. Encryption: C = (P + K) mod 26. Decryption: P = (C − K) mod 26.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp7.py"># Vigenere Cipher: C = (P + K) mod 26 with the keyword repeated
+plain = "she is listening"
+keyword = "pascal"
+
+print("STEP 1: Remove the spaces and use capital letters")
+text = plain.replace(" ", "").upper()
+keyword = keyword.upper()
+print(text)
+print()
+
+print("STEP 2: Repeat the keyword under the plain text")
+long_key = ""
+for i in range(len(text)):
+    long_key += keyword[i % len(keyword)]
+print("Plain :", text)
+print("Key   :", long_key)
+print()
+
+print("STEP 3: Encrypt every letter using C = (P + K) mod 26")
+print("Plain  P   Key   K   P+K   mod 26   Cipher")
+cipher = ""
+for i in range(len(text)):
+    p = ord(text[i]) - 65
+    k = ord(long_key[i]) - 65
+    total = p + k
+    c = total % 26
+    cipher += chr(c + 65)
+    print(f"  {text[i]}   {p:2d}    {long_key[i]}   {k:2d}   {total:3d}     {c:2d}       {chr(c + 65)}")
+print()
+
+print("STEP 4: Cipher text")
+print(cipher)
+print()
+
+print("STEP 5: Decrypt every letter using P = (C - K) mod 26")
+print("Cipher  C   Key   K   C-K   mod 26   Plain")
+decrypted = ""
+for i in range(len(cipher)):
+    c = ord(cipher[i]) - 65
+    k = ord(long_key[i]) - 65
+    diff = c - k
+    p = diff % 26
+    decrypted += chr(p + 65)
+    print(f"  {cipher[i]}    {c:2d}    {long_key[i]}   {k:2d}   {diff:3d}     {p:2d}       {chr(p + 65)}")
+print()
+
+print("STEP 6: Decrypted text")
+print(decrypted)
+</textarea></div>
+<div class="lbl">Output (step-wise execution)</div>
+<pre class="out">STEP 1: Remove the spaces and use capital letters
+SHEISLISTENING
+
+STEP 2: Repeat the keyword under the plain text
+Plain : SHEISLISTENING
+Key   : PASCALPASCALPA
+
+STEP 3: Encrypt every letter using C = (P + K) mod 26
+Plain  P   Key   K   P+K   mod 26   Cipher
+  S   18    P   15    33      7       H
+  H    7    A    0     7      7       H
+  E    4    S   18    22     22       W
+  I    8    C    2    10     10       K
+  S   18    A    0    18     18       S
+  L   11    L   11    22     22       W
+  I    8    P   15    23     23       X
+  S   18    A    0    18     18       S
+  T   19    S   18    37     11       L
+  E    4    C    2     6      6       G
+  N   13    A    0    13     13       N
+  I    8    L   11    19     19       T
+  N   13    P   15    28      2       C
+  G    6    A    0     6      6       G
+
+STEP 4: Cipher text
+HHWKSWXSLGNTCG
+
+STEP 5: Decrypt every letter using P = (C - K) mod 26
+Cipher  C   Key   K   C-K   mod 26   Plain
+  H     7    P   15    -8     18       S
+  H     7    A    0     7      7       H
+  W    22    S   18     4      4       E
+  K    10    C    2     8      8       I
+  S    18    A    0    18     18       S
+  W    22    L   11    11     11       L
+  X    23    P   15     8      8       I
+  S    18    A    0    18     18       S
+  L    11    S   18    -7     19       T
+  G     6    C    2     4      4       E
+  N    13    A    0    13     13       N
+  T    19    L   11     8      8       I
+  C     2    P   15   -13     13       N
+  G     6    A    0     6      6       G
+
+STEP 6: Decrypted text
+SHEISLISTENING</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp7.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp7.py</b> (in IDLE press <b>F5</b>).</li><li>The program prints every step as shown in the output above. Compare your screen with it.</li></ol>
+</section>
+
+<section id="e8">
+<h2>8. Hill Cipher</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Hill cipher.<br>Plain text: “we live in an insecure world”. Key matrix: first row (03 02), second row (05 07).</p>
+<div class="lbl">Logic</div>
+<p class="qt">Letters are taken in pairs and multiplied by the key matrix: C = K·P mod 26. The determinant is 3×7 − 2×5 = 11, which has an inverse (19) mod 26, so the key is valid. Decryption uses the inverse matrix K<sup>−1</sup>. An odd length is padded with X.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp8.py"># Hill Cipher (2 x 2 key matrix): C = K * P mod 26
+plain = "we live in an insecure world"
+K = [[3, 2],
+     [5, 7]]
+
+def mod_inverse(a, m):
+    for i in range(1, m):
+        if (a * i) % m == 1:
+            return i
+
+print("STEP 1: Remove the spaces, use capital letters, pad with X if the length is odd")
+text = plain.replace(" ", "").upper()
+if len(text) % 2 != 0:
+    text += "X"
+print(text)
+print()
+
+print("STEP 2: Key matrix and its determinant")
+print(f"K = [{K[0][0]} {K[0][1]}]")
+print(f"    [{K[1][0]} {K[1][1]}]")
+det = (K[0][0] * K[1][1] - K[0][1] * K[1][0]) % 26
+print(f"det = {K[0][0]} x {K[1][1]} - {K[0][1]} x {K[1][0]} = {det}")
+print()
+
+print("STEP 3: Inverse of the determinant mod 26")
+d_inv = mod_inverse(det, 26)
+print(f"{det} x {d_inv} = {det * d_inv},  {det * d_inv} mod 26 = {(det * d_inv) % 26}  -&gt; inverse = {d_inv}")
+print()
+
+print("STEP 4: Inverse key matrix = inverse(det) x adjoint mod 26")
+K_inv = [[(K[1][1] * d_inv) % 26, (-K[0][1] * d_inv) % 26],
+         [(-K[1][0] * d_inv) % 26, (K[0][0] * d_inv) % 26]]
+print(f"K inverse = [{K_inv[0][0]} {K_inv[0][1]}]")
+print(f"            [{K_inv[1][0]} {K_inv[1][1]}]")
+print()
+
+def process(text, M, label):
+    result = ""
+    for i in range(0, len(text), 2):
+        p1 = ord(text[i]) - 65
+        p2 = ord(text[i + 1]) - 65
+        s1 = M[0][0] * p1 + M[0][1] * p2
+        s2 = M[1][0] * p1 + M[1][1] * p2
+        c1 = s1 % 26
+        c2 = s2 % 26
+        result += chr(c1 + 65) + chr(c2 + 65)
+        print(f"{text[i]}{text[i+1]} = ({p1},{p2})  first = {M[0][0]}x{p1} + {M[0][1]}x{p2} = {s1} mod 26 = {c1} ({chr(c1+65)})   second = {M[1][0]}x{p1} + {M[1][1]}x{p2} = {s2} mod 26 = {c2} ({chr(c2+65)})")
+    return result
+
+print("STEP 5: Encrypt every pair (multiply by K)")
+cipher = process(text, K, "encrypt")
+print()
+
+print("STEP 6: Cipher text")
+print(cipher)
+print()
+
+print("STEP 7: Decrypt every pair (multiply by K inverse)")
+decrypted = process(cipher, K_inv, "decrypt")
+print()
+
+print("STEP 8: Decrypted text")
+print(decrypted)
+</textarea></div>
+<div class="lbl">Output (step-wise execution)</div>
+<pre class="out">STEP 1: Remove the spaces, use capital letters, pad with X if the length is odd
+WELIVEINANINSECUREWORLDX
+
+STEP 2: Key matrix and its determinant
+K = [3 2]
+    [5 7]
+det = 3 x 7 - 2 x 5 = 11
+
+STEP 3: Inverse of the determinant mod 26
+11 x 19 = 209,  209 mod 26 = 1  -&gt; inverse = 19
+
+STEP 4: Inverse key matrix = inverse(det) x adjoint mod 26
+K inverse = [3 14]
+            [9 5]
+
+STEP 5: Encrypt every pair (multiply by K)
+WE = (22,4)  first = 3x22 + 2x4 = 74 mod 26 = 22 (W)   second = 5x22 + 7x4 = 138 mod 26 = 8 (I)
+LI = (11,8)  first = 3x11 + 2x8 = 49 mod 26 = 23 (X)   second = 5x11 + 7x8 = 111 mod 26 = 7 (H)
+VE = (21,4)  first = 3x21 + 2x4 = 71 mod 26 = 19 (T)   second = 5x21 + 7x4 = 133 mod 26 = 3 (D)
+IN = (8,13)  first = 3x8 + 2x13 = 50 mod 26 = 24 (Y)   second = 5x8 + 7x13 = 131 mod 26 = 1 (B)
+AN = (0,13)  first = 3x0 + 2x13 = 26 mod 26 = 0 (A)   second = 5x0 + 7x13 = 91 mod 26 = 13 (N)
+IN = (8,13)  first = 3x8 + 2x13 = 50 mod 26 = 24 (Y)   second = 5x8 + 7x13 = 131 mod 26 = 1 (B)
+SE = (18,4)  first = 3x18 + 2x4 = 62 mod 26 = 10 (K)   second = 5x18 + 7x4 = 118 mod 26 = 14 (O)
+CU = (2,20)  first = 3x2 + 2x20 = 46 mod 26 = 20 (U)   second = 5x2 + 7x20 = 150 mod 26 = 20 (U)
+RE = (17,4)  first = 3x17 + 2x4 = 59 mod 26 = 7 (H)   second = 5x17 + 7x4 = 113 mod 26 = 9 (J)
+WO = (22,14)  first = 3x22 + 2x14 = 94 mod 26 = 16 (Q)   second = 5x22 + 7x14 = 208 mod 26 = 0 (A)
+RL = (17,11)  first = 3x17 + 2x11 = 73 mod 26 = 21 (V)   second = 5x17 + 7x11 = 162 mod 26 = 6 (G)
+DX = (3,23)  first = 3x3 + 2x23 = 55 mod 26 = 3 (D)   second = 5x3 + 7x23 = 176 mod 26 = 20 (U)
+
+STEP 6: Cipher text
+WIXHTDYBANYBKOUUHJQAVGDU
+
+STEP 7: Decrypt every pair (multiply by K inverse)
+WI = (22,8)  first = 3x22 + 14x8 = 178 mod 26 = 22 (W)   second = 9x22 + 5x8 = 238 mod 26 = 4 (E)
+XH = (23,7)  first = 3x23 + 14x7 = 167 mod 26 = 11 (L)   second = 9x23 + 5x7 = 242 mod 26 = 8 (I)
+TD = (19,3)  first = 3x19 + 14x3 = 99 mod 26 = 21 (V)   second = 9x19 + 5x3 = 186 mod 26 = 4 (E)
+YB = (24,1)  first = 3x24 + 14x1 = 86 mod 26 = 8 (I)   second = 9x24 + 5x1 = 221 mod 26 = 13 (N)
+AN = (0,13)  first = 3x0 + 14x13 = 182 mod 26 = 0 (A)   second = 9x0 + 5x13 = 65 mod 26 = 13 (N)
+YB = (24,1)  first = 3x24 + 14x1 = 86 mod 26 = 8 (I)   second = 9x24 + 5x1 = 221 mod 26 = 13 (N)
+KO = (10,14)  first = 3x10 + 14x14 = 226 mod 26 = 18 (S)   second = 9x10 + 5x14 = 160 mod 26 = 4 (E)
+UU = (20,20)  first = 3x20 + 14x20 = 340 mod 26 = 2 (C)   second = 9x20 + 5x20 = 280 mod 26 = 20 (U)
+HJ = (7,9)  first = 3x7 + 14x9 = 147 mod 26 = 17 (R)   second = 9x7 + 5x9 = 108 mod 26 = 4 (E)
+QA = (16,0)  first = 3x16 + 14x0 = 48 mod 26 = 22 (W)   second = 9x16 + 5x0 = 144 mod 26 = 14 (O)
+VG = (21,6)  first = 3x21 + 14x6 = 147 mod 26 = 17 (R)   second = 9x21 + 5x6 = 219 mod 26 = 11 (L)
+DU = (3,20)  first = 3x3 + 14x20 = 289 mod 26 = 3 (D)   second = 9x3 + 5x20 = 127 mod 26 = 23 (X)
+
+STEP 8: Decrypted text
+WELIVEINANINSECUREWORLDX</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp8.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp8.py</b> (in IDLE press <b>F5</b>).</li><li>The program prints every step as shown in the output above. Compare your screen with it.</li></ol>
+</section>
+
+<section id="e9">
+<h2>9. Character Count Framing</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Character Count framing technique.<br>Input: A = 01000111, B = 11100011, FLAG = 01111110, ESC = 11100000. Frame: A B ESC FLAG.</p>
+<div class="lbl">Logic</div>
+<p class="qt">The first field of the frame holds the number of characters in the frame, including the count field itself. The receiver reads the count and then takes exactly that many characters. Weakness: if the count is corrupted, the receiver loses synchronisation.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp9.py"># Character Count Framing: first byte of the frame tells the frame length
+A    = "01000111"
+B    = "11100011"
+FLAG = "01111110"
+ESC  = "11100000"
+names = {A: "A", B: "B", FLAG: "FLAG", ESC: "ESC"}
+
+data = [A, B, ESC, FLAG]                   # FRAME = A B ESC FLAG
+
+print("STEP 1: Characters of the frame")
+for ch in data:
+    print(f"  {names[ch]:4s} = {ch}")
+print()
+
+print("STEP 2: Calculate the count (data characters + 1 for the count field itself)")
+count = len(data) + 1
+count_byte = format(count, "08b")
+print(f"  {len(data)} + 1 = {count}   -&gt; binary {count_byte}")
+print()
+
+print("STEP 3: Sender builds the frame = count field + data characters")
+frame = [count_byte] + data
+print("  Count field :", count_byte)
+for ch in data:
+    print(f"  {names[ch]:4s}        : {ch}")
+print("  Frame sent  :", " ".join(frame))
+print()
+
+print("STEP 4: Receiver reads the first byte to get the frame length")
+n = int(frame[0], 2)
+print(f"  First byte {frame[0]} = {n}  -&gt; frame has {n} characters (count included)")
+print()
+
+print("STEP 5: Receiver takes the next %d characters as data" % (n - 1))
+for i in range(1, n):
+    print(f"  character {i}: {frame[i]}  ({names[frame[i]]})")
+print()
+
+print("STEP 6: Data received")
+print(" ".join(frame[1:n]))
+</textarea></div>
+<div class="lbl">Output (step-wise execution)</div>
+<pre class="out">STEP 1: Characters of the frame
+  A    = 01000111
+  B    = 11100011
+  ESC  = 11100000
+  FLAG = 01111110
+
+STEP 2: Calculate the count (data characters + 1 for the count field itself)
+  4 + 1 = 5   -&gt; binary 00000101
+
+STEP 3: Sender builds the frame = count field + data characters
+  Count field : 00000101
+  A           : 01000111
+  B           : 11100011
+  ESC         : 11100000
+  FLAG        : 01111110
+  Frame sent  : 00000101 01000111 11100011 11100000 01111110
+
+STEP 4: Receiver reads the first byte to get the frame length
+  First byte 00000101 = 5  -&gt; frame has 5 characters (count included)
+
+STEP 5: Receiver takes the next 4 characters as data
+  character 1: 01000111  (A)
+  character 2: 11100011  (B)
+  character 3: 11100000  (ESC)
+  character 4: 01111110  (FLAG)
+
+STEP 6: Data received
+01000111 11100011 11100000 01111110</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp9.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp9.py</b> (in IDLE press <b>F5</b>).</li><li>The program prints every step as shown in the output above. Compare your screen with it.</li></ol>
+</section>
+
+<section id="e10">
+<h2>10. Byte (Character) Stuffing</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Byte Stuffing (Character Stuffing) framing technique.<br>Input: A = 01000111, B = 11100011, FLAG = 01111110, ESC = 11100000. Frame: A B ESC FLAG.</p>
+<div class="lbl">Logic</div>
+<p class="qt">Each frame starts and ends with a FLAG byte. If a FLAG or ESC byte appears inside the data, the sender inserts an ESC byte in front of it. The receiver removes the flags and drops every ESC that was stuffed.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp10.py"># Byte (Character) Stuffing: put ESC before every FLAG or ESC found in the data
+A    = "01000111"
+B    = "11100011"
+FLAG = "01111110"
+ESC  = "11100000"
+names = {A: "A", B: "B", FLAG: "FLAG", ESC: "ESC"}
+
+data = [A, B, ESC, FLAG]                   # FRAME = A B ESC FLAG
+
+print("STEP 1: Data characters")
+for ch in data:
+    print(f"  {names[ch]:4s} = {ch}")
+print()
+
+print("STEP 2: Sender checks every byte (FLAG or ESC in the data gets an ESC in front)")
+print("Byte   Is it FLAG or ESC?   Action")
+stuffed = []
+for byte in data:
+    if byte == FLAG or byte == ESC:
+        stuffed.append(ESC)
+        stuffed.append(byte)
+        print(f" {names[byte]:4s}   yes                  put ESC before it, then {names[byte]}")
+    else:
+        stuffed.append(byte)
+        print(f" {names[byte]:4s}   no                   copy as it is")
+print()
+
+print("STEP 3: Data after stuffing")
+print(" ".join(names[b] for b in stuffed))
+print(" ".join(stuffed))
+print()
+
+print("STEP 4: Add the FLAG at the start and at the end")
+frame = [FLAG] + stuffed + [FLAG]
+print(" ".join(names[b] for b in frame))
+print("Frame sent:", " ".join(frame))
+print()
+
+print("STEP 5: Receiver removes the flags and the stuffed ESC bytes")
+body = frame[1:-1]
+destuffed = []
+i = 0
+while i &lt; len(body):
+    if body[i] == ESC:
+        print(f"  {names[body[i]]:4s} found -&gt; skip it, keep the next byte {names[body[i + 1]]}")
+        i += 1
+    else:
+        print(f"  {names[body[i]]:4s} normal -&gt; keep it")
+    destuffed.append(body[i])
+    i += 1
+print()
+
+print("STEP 6: Data received after destuffing")
+print(" ".join(names[b] for b in destuffed))
+print(" ".join(destuffed))
+</textarea></div>
+<div class="lbl">Output (step-wise execution)</div>
+<pre class="out">STEP 1: Data characters
+  A    = 01000111
+  B    = 11100011
+  ESC  = 11100000
+  FLAG = 01111110
+
+STEP 2: Sender checks every byte (FLAG or ESC in the data gets an ESC in front)
+Byte   Is it FLAG or ESC?   Action
+ A      no                   copy as it is
+ B      no                   copy as it is
+ ESC    yes                  put ESC before it, then ESC
+ FLAG   yes                  put ESC before it, then FLAG
+
+STEP 3: Data after stuffing
+A B ESC ESC ESC FLAG
+01000111 11100011 11100000 11100000 11100000 01111110
+
+STEP 4: Add the FLAG at the start and at the end
+FLAG A B ESC ESC ESC FLAG FLAG
+Frame sent: 01111110 01000111 11100011 11100000 11100000 11100000 01111110 01111110
+
+STEP 5: Receiver removes the flags and the stuffed ESC bytes
+  A    normal -&gt; keep it
+  B    normal -&gt; keep it
+  ESC  found -&gt; skip it, keep the next byte ESC
+  ESC  found -&gt; skip it, keep the next byte FLAG
+
+STEP 6: Data received after destuffing
+A B ESC FLAG
+01000111 11100011 11100000 01111110</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp10.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp10.py</b> (in IDLE press <b>F5</b>).</li><li>The program prints every step as shown in the output above. Compare your screen with it.</li></ol>
+</section>
+
+<section id="e11">
+<h2>11. Bit Stuffing</h2>
+<div class="lbl">Question</div>
+<p class="qt">Write a program to implement the Bit Stuffing framing technique.<br>Input: A = 01000111, B = 11100011, FLAG = 01111110, ESC = 11100000. Frame: A B ESC FLAG.</p>
+<div class="lbl">Logic</div>
+<p class="qt">The flag 01111110 has six 1s in a row. To keep it unique, the sender inserts a 0 after every five consecutive 1s in the data. The receiver removes a 0 that follows five consecutive 1s.</p>
+<div class="lbl">Answer (complete code)</div>
+<div class="ans"><textarea data-f="exp11.py"># Bit Stuffing: insert a 0 after every five consecutive 1s
+A    = "01000111"
+B    = "11100011"
+FLAG = "01111110"
+ESC  = "11100000"
+
+data = A + B + ESC + FLAG                  # FRAME = A B ESC FLAG as bits
+
+print("STEP 1: Frame as one bit string (A B ESC FLAG)")
+print(data)
+print()
+
+print("STEP 2: Sender - insert a 0 after every five consecutive 1s")
+print("No.  Bit  Ones in a row  Action")
+stuffed = ""
+ones = 0
+for i in range(len(data)):
+    bit = data[i]
+    stuffed += bit
+    if bit == "1":
+        ones += 1
+        if ones == 5:
+            stuffed += "0"
+            print(f"{i + 1:3d}   {bit}        {ones}         five 1s -&gt; insert a 0")
+            ones = 0
+        else:
+            print(f"{i + 1:3d}   {bit}        {ones}         copy")
+    else:
+        ones = 0
+        print(f"{i + 1:3d}   {bit}        {ones}         copy, count reset")
+print()
+
+print("STEP 3: Data after stuffing")
+print(stuffed)
+print()
+
+print("STEP 4: Add the FLAG (01111110) at the start and at the end")
+frame = FLAG + stuffed + FLAG
+print("Frame sent:", frame)
+print()
+
+print("STEP 5: Receiver removes the flags, then the 0 that follows five 1s")
+body = frame[len(FLAG):-len(FLAG)]
+print("Body:", body)
+print("No.  Bit  Ones in a row  Action")
+destuffed = ""
+ones = 0
+i = 0
+while i &lt; len(body):
+    bit = body[i]
+    destuffed += bit
+    if bit == "1":
+        ones += 1
+        if ones == 5:
+            print(f"{i + 1:3d}   {bit}        {ones}         five 1s -&gt; next 0 is stuffed, remove it")
+            i += 1
+            ones = 0
+        else:
+            print(f"{i + 1:3d}   {bit}        {ones}         keep")
+    else:
+        ones = 0
+        print(f"{i + 1:3d}   {bit}        {ones}         keep, count reset")
+    i += 1
+print()
+
+print("STEP 6: Data received after destuffing")
+print(destuffed)
+print("Same as original data:", destuffed == data)
+</textarea></div>
+<div class="lbl">Output (step-wise execution)</div>
+<pre class="out">STEP 1: Frame as one bit string (A B ESC FLAG)
+01000111111000111110000001111110
+
+STEP 2: Sender - insert a 0 after every five consecutive 1s
+No.  Bit  Ones in a row  Action
+  1   0        0         copy, count reset
+  2   1        1         copy
+  3   0        0         copy, count reset
+  4   0        0         copy, count reset
+  5   0        0         copy, count reset
+  6   1        1         copy
+  7   1        2         copy
+  8   1        3         copy
+  9   1        4         copy
+ 10   1        5         five 1s -&gt; insert a 0
+ 11   1        1         copy
+ 12   0        0         copy, count reset
+ 13   0        0         copy, count reset
+ 14   0        0         copy, count reset
+ 15   1        1         copy
+ 16   1        2         copy
+ 17   1        3         copy
+ 18   1        4         copy
+ 19   1        5         five 1s -&gt; insert a 0
+ 20   0        0         copy, count reset
+ 21   0        0         copy, count reset
+ 22   0        0         copy, count reset
+ 23   0        0         copy, count reset
+ 24   0        0         copy, count reset
+ 25   0        0         copy, count reset
+ 26   1        1         copy
+ 27   1        2         copy
+ 28   1        3         copy
+ 29   1        4         copy
+ 30   1        5         five 1s -&gt; insert a 0
+ 31   1        1         copy
+ 32   0        0         copy, count reset
+
+STEP 3: Data after stuffing
+01000111110100011111000000011111010
+
+STEP 4: Add the FLAG (01111110) at the start and at the end
+Frame sent: 011111100100011111010001111100000001111101001111110
+
+STEP 5: Receiver removes the flags, then the 0 that follows five 1s
+Body: 01000111110100011111000000011111010
+No.  Bit  Ones in a row  Action
+  1   0        0         keep, count reset
+  2   1        1         keep
+  3   0        0         keep, count reset
+  4   0        0         keep, count reset
+  5   0        0         keep, count reset
+  6   1        1         keep
+  7   1        2         keep
+  8   1        3         keep
+  9   1        4         keep
+ 10   1        5         five 1s -&gt; next 0 is stuffed, remove it
+ 12   1        1         keep
+ 13   0        0         keep, count reset
+ 14   0        0         keep, count reset
+ 15   0        0         keep, count reset
+ 16   1        1         keep
+ 17   1        2         keep
+ 18   1        3         keep
+ 19   1        4         keep
+ 20   1        5         five 1s -&gt; next 0 is stuffed, remove it
+ 22   0        0         keep, count reset
+ 23   0        0         keep, count reset
+ 24   0        0         keep, count reset
+ 25   0        0         keep, count reset
+ 26   0        0         keep, count reset
+ 27   0        0         keep, count reset
+ 28   1        1         keep
+ 29   1        2         keep
+ 30   1        3         keep
+ 31   1        4         keep
+ 32   1        5         five 1s -&gt; next 0 is stuffed, remove it
+ 34   1        1         keep
+ 35   0        0         keep, count reset
+
+STEP 6: Data received after destuffing
+01000111111000111110000001111110
+Same as original data: True</pre>
+<div class="lbl">How to run (tools)</div>
+<ol class="steps"><li>Install <b>Python 3</b> from python.org (tick “Add Python to PATH”) and open <b>VS Code</b> (or IDLE).</li><li>Create a file named <b>exp11.py</b>, paste the code from above and save (Ctrl+S).</li><li>Run it: press the <b>Run ▶</b> button in VS Code, or open a terminal in the folder and type <b>python exp11.py</b> (in IDLE press <b>F5</b>).</li><li>The program prints every step as shown in the output above. Compare your screen with it.</li></ol>
+</section>
+</main>
+<script>
+function copyText(t, btn) {
+  var done = function () { btn.textContent = "Copied!"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); };
+  var fallback = function () {
+    t.focus(); t.select();
+    try { document.execCommand("copy"); done(); } catch (e) { btn.textContent = "Press Ctrl+C"; }
+  };
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t.value).then(done, fallback);
+    else fallback();
+  } catch (e) { fallback(); }
+}
+var nav = document.getElementById("nav");
+var secs = document.querySelectorAll("section");
+for (var s = 0; s < secs.length; s++) {
+  (function (sec) {
+    var a = document.createElement("a");
+    a.href = "#" + sec.id;
+    a.textContent = "Exp " + sec.id.slice(1);
+    nav.appendChild(a);
+    var areas = sec.querySelectorAll("textarea");
+    for (var i = 0; i < areas.length; i++) {
+      (function (t) {
+        var w = document.createElement("div"); w.className = "file";
+        var h = document.createElement("div"); h.className = "fh";
+        var b = document.createElement("b"); b.textContent = t.dataset.f;
+        var btn = document.createElement("button"); btn.type = "button"; btn.textContent = "Copy";
+        btn.onclick = function () { copyText(t, btn); };
+        h.appendChild(b); h.appendChild(btn);
+        t.parentNode.insertBefore(w, t);
+        w.appendChild(h); w.appendChild(t);
+        t.readOnly = true; t.spellcheck = false; t.setAttribute("wrap", "off");
+        t.rows = Math.min(t.value.split("\n").length + 1, 40);
+      })(areas[i]);
+    }
+  })(secs[s]);
+}
+</script>
+</body>
+</html>
